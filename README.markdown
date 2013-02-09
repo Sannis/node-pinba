@@ -1,7 +1,7 @@
 Node-pinba
 ==========
 
-Binary [Pinba] bindings.
+[Pinba] for Node.js.
 
 Pinba is a realtime monitoring/statistics server for PHP using MySQL as a read-only interface.
 

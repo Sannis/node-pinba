@@ -1,5 +1,5 @@
 { "name" : "pinba"
-, "description" : "Binary Pinba bindings"
+, "description" : "Pinba for Node.js"
 , "keywords" : ["pinba", "mysql", "monitoring", "profiling"]
 , "homepage" : "http://sannis.github.com/node-pinba"
 , "version" : "0.0.0"
@@ -20,9 +20,10 @@
   }
 , "main" : "./lib/pinba.js"
 , "scripts" : { "test" : "make test" }
-, "engines" : { "node" : "0.6.x || 0.7.x || 0.8.x" }
+, "engines" : { "node" : "0.6.x || 0.7.x || 0.8.x || 0.9.x" }
 , "devDependencies" :
   { "nodeunit" : ">= 0.7"
   , "nodelint" : ">= 0.6"
+  , "ndoc"     : ">= 2.0"
   }
 }
