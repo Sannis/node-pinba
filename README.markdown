@@ -28,6 +28,43 @@ You can install this module via [npm]:
 [npm]: https://github.com/isaacs/npm
 
 
+Usage
+-----
+
+Because Node.js operates in single-threaded event loop and does not orient only for HTTP servers,
+there was some differences between this module and original Pinba for PHP. Mostly, there is no
+isolate requests in Node.js, so you should take care of creating `PinbaRequest` instance
+for each code chain that you mention as request and call instance `end` method at response send.
+
+There is a simple example how to capture timer value around database call during request:
+
+```
+var http = require('http');
+var PinbaRequest = require('pinba').PinbaRequest;
+var db = require('./my_db.js');
+
+http.createServer(function (req, res) {
+  var pr = new PinbaRequest({
+    server_name: 'example.com',
+    script_name: '/handler'
+  });
+
+  var timerDb = pr.timerStart({type: 'db', op: 'select'});
+  db.query("SELECT data FROM database", function (err, data) {
+    pr.timerStop(timerDb);
+
+    if (err) throw err;
+
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('Hello World\n');
+    pr.flush();
+  });
+}).listen(8080, '127.0.0.1');
+```
+
+Read this module API docs and original Pinba docs for more information.
+
+
 Contributing
 ------------
 
