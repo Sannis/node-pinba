@@ -25,6 +25,9 @@ You can install this module via [npm]:
 
     $> npm install pinba
 
+Node.js is not a bottleneck anymore! Now you can use pinba to measure particular code parts
+and collect information about requests to your server.
+
 [npm]: https://github.com/isaacs/npm
 
 
