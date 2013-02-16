@@ -25,7 +25,7 @@ lint: npm-install
 		./node_modules/.bin/nodelint --config ./nodelint.conf ./package.json ./lib
 		./node_modules/.bin/nodelint --config ./nodelint.conf ./tests
 
-doc: ./lib/*
+doc: ./lib/pinba.js
 		rm -rf ${API_DEST_DIR}
 		./node_modules/.bin/ndoc \
 		  --gh-ribbon ${GITHUB_PROJECT_URL} \
