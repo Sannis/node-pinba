@@ -21,6 +21,7 @@
 , "main" : "./lib/pinba.js"
 , "scripts" : { "test" : "make test" }
 , "engines" : { "node" : "0.6.x || 0.7.x || 0.8.x || 0.9.x" }
+, "dependencies" : { "lodash" : ">= 1.0.0" }
 , "devDependencies" :
   { "nodeunit" : ">= 0.7"
   , "nodelint" : ">= 0.6"
