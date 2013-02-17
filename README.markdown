@@ -37,7 +37,7 @@ Usage
 Because Node.js operates in single-threaded event loop and does not orient only for HTTP servers,
 there was some differences between this module and original Pinba for PHP. Mostly, there is no
 isolate requests in Node.js, so you should take care of creating `PinbaRequest` instance
-for each code chain that you mention as request and call instance `flush` method at response end.
+for each code chain that you mention as request and call `PinbaRequest` instance `flush` method at response end.
 
 There is a simple example how to capture timer value around database call during request:
 
