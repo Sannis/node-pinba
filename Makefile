@@ -19,7 +19,7 @@ clean:
 		rm -f npm-install-stamp
 
 test: npm-install
-		./node_modules/.bin/nodeunit --reporter=minimal tests
+		./node_modules/.bin/mocha --reporter spec test/test.js
 
 lint: npm-install
 		./node_modules/.bin/nodelint --config ./nodelint.conf ./package.json ./lib
