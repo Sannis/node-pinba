@@ -11,6 +11,8 @@
 
 var assert = require("assert");
 
+var _ = require('lodash');
+
 var node_pinba = require('../');
 
 describe('node-pinba', function () {
@@ -121,6 +123,16 @@ describe('node-pinba', function () {
         assert.ok(info.value * 1000 > 99, "Greater than 99");
 
         assert.deepEqual(info.tags, {tag: 'tagValue'}, "Correct tags");
+      });
+
+      it('may be deleted [timerDelete]', function () {
+        var r = new node_pinba.PinbaRequest();
+        var timer1 = r.timerAdd({tag1: 'tag1value'}, 0.100);
+        var timer2 = r.timerAdd({tag2: 'tag2value'}, 0.100);
+
+        r.timerDelete(timer1);
+
+        assert.deepEqual(_.keys(r.timers), [timer2]);
       });
 
       it('should properly works with tags [timerTagsMerge+timerTagsReplace]', function () {
