@@ -73,7 +73,7 @@ describe('node-pinba', function () {
     });
 
     describe('timers', function () {
-      it('should by properly generated', function (done) {
+      it('should by properly generated [timerStart+timerStop]', function (done) {
         var r = new node_pinba.PinbaRequest();
         var timer1 = r.timerStart();
         setTimeout(function () {
@@ -92,7 +92,7 @@ describe('node-pinba', function () {
         }, 100);
       });
 
-      it('should properly return info', function (done) {
+      it('should properly return info [timerStart+timerStop+timerGetInfo]', function (done) {
         var r = new node_pinba.PinbaRequest();
         var timer = r.timerStart();
         setTimeout(function () {
@@ -109,7 +109,21 @@ describe('node-pinba', function () {
         }, 100);
       });
 
-      it('should properly works with tags', function () {
+      it('should properly return info [timerAdd+timerGetInfo]', function () {
+        var r = new node_pinba.PinbaRequest();
+        var timer = r.timerAdd({tag: 'tagValue'}, 0.100);
+
+        var info = r.timerGetInfo(timer);
+
+        assert.ok(!info.started, "Stopped");
+
+        assert.ok(info.value * 1000 < 101, "Less than 101");
+        assert.ok(info.value * 1000 > 99, "Greater than 99");
+
+        assert.deepEqual(info.tags, {tag: 'tagValue'}, "Correct tags");
+      });
+
+      it('should properly works with tags [timerTagsMerge+timerTagsReplace]', function () {
         var r = new node_pinba.PinbaRequest();
         var timer1 = r.timerStart({tag1: 'tag1value'});
         var timer2 = r.timerStart({tag2: 'tag2value'});
@@ -128,7 +142,7 @@ describe('node-pinba', function () {
         assert.deepEqual(info1.tags, {tag3: 'tag3valueReplaced', tag4: 'tag4valueReplaced'}, "Tags replaced");
       });
 
-      it('should properly works with data', function () {
+      it('should properly works with data [timerDataMerge+timerDataReplace]', function () {
         var r = new node_pinba.PinbaRequest();
         var timer1 = r.timerStart({}, {data1: 'data1value'});
         var timer2 = r.timerStart({}, {data2: 'data2value'});
