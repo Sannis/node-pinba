@@ -21,57 +21,30 @@ describe('node-pinba', function () {
   });
 
   describe('PinbaRequest', function () {
-    var r = new node_pinba.PinbaRequest();
-    it('should have method setHostname()', function () {
-      assert.ok(typeof r.setHostname === 'function');
-    });
-    it('should have method setServerName()', function () {
-      assert.ok(typeof r.setServerName === 'function');
-    });
-    it('should have method setScriptName()', function () {
-      assert.ok(typeof r.setScriptName === 'function');
-    });
-    it('should have method setPinbaServer()', function () {
-      assert.ok(typeof r.setPinbaServer === 'function');
-    });
-    it('should have method setPinbaPort()', function () {
-      assert.ok(typeof r.setPinbaPort === 'function');
-    });
-    it('should have method timerStart()', function () {
-      assert.ok(typeof r.timerStart === 'function');
-    });
-    it('should have method timerStop()', function () {
-      assert.ok(typeof r.timerStop === 'function');
-    });
-    it('should have method timerAdd()', function () {
-      assert.ok(typeof r.timerAdd === 'function');
-    });
-    it('should have method timerDelete()', function () {
-      assert.ok(typeof r.timerDelete === 'function');
-    });
-    it('should have method timerTagsMerge()', function () {
-      assert.ok(typeof r.timerTagsMerge === 'function');
-    });
-    it('should have method timerTagsReplace()', function () {
-      assert.ok(typeof r.timerTagsReplace === 'function');
-    });
-    it('should have method timerDataMerge()', function () {
-      assert.ok(typeof r.timerDataMerge === 'function');
-    });
-    it('should have method timerDataReplace()', function () {
-      assert.ok(typeof r.timerDataReplace === 'function');
-    });
-    it('should have method timerGetInfo()', function () {
-      assert.ok(typeof r.timerGetInfo === 'function');
-    });
-    it('should have method timersStop()', function () {
-      assert.ok(typeof r.timersStop === 'function');
-    });
-    it('should have method getInfo()', function () {
-      assert.ok(typeof r.getInfo === 'function');
-    });
-    it('should have method flush()', function () {
-      assert.ok(typeof r.flush === 'function');
+    var methods = [
+      'setHostname',
+      'setServerName',
+      'setScriptName',
+      'setPinbaServer',
+      'setPinbaPort',
+      'timerStart',
+      'timerStop',
+      'timerAdd',
+      'timerDelete',
+      'timerTagsMerge',
+      'timerTagsReplace',
+      'timerDataMerge',
+      'timerDataReplace',
+      'timerGetInfo',
+      'timersStop',
+      'getInfo',
+      'flush'
+    ];
+    _.forEach(methods, function (method) {
+      var r = new node_pinba.PinbaRequest();
+      it('should have method ' + method + '()', function () {
+        assert.ok(typeof r[method] === 'function');
+      });
     });
 
     describe('timers', function () {
