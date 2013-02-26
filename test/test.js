@@ -47,6 +47,60 @@ describe('node-pinba', function () {
       });
     });
 
+    it('should support parameters', function () {
+      var r = new node_pinba.PinbaRequest({
+        hostname:     'HOSTNAME',
+        server_name:  'SERVER_NAME',
+        script_name:  'SCRIPT_NAME',
+        pinba_server: 'PINBA_SERVER',
+        pinba_port:   'PINBA_PORT'
+      });
+
+      assert.deepEqual(
+        [
+          r.hostname,
+          r.server_name,
+          r.script_name,
+          r.pinba_server,
+          r.pinba_port
+        ],
+        [
+          'HOSTNAME',
+          'SERVER_NAME',
+          'SCRIPT_NAME',
+          'PINBA_SERVER',
+          'PINBA_PORT'
+        ]
+      );
+    });
+
+    it('that may be changed through setters', function () {
+      var r = new node_pinba.PinbaRequest();
+
+      r.setHostname('HOSTNAME');
+      r.setServerName('SERVER_NAME');
+      r.setScriptName('SCRIPT_NAME');
+      r.setPinbaServer('PINBA_SERVER');
+      r.setPinbaPort('PINBA_PORT');
+
+      assert.deepEqual(
+        [
+          r.hostname,
+          r.server_name,
+          r.script_name,
+          r.pinba_server,
+          r.pinba_port
+        ],
+        [
+          'HOSTNAME',
+          'SERVER_NAME',
+          'SCRIPT_NAME',
+          'PINBA_SERVER',
+          'PINBA_PORT'
+        ]
+      );
+    });
+
     describe('timers', function () {
       it('should by properly generated [timerStart+timerStop]', function (done) {
         var r = new node_pinba.PinbaRequest();
