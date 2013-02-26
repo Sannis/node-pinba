@@ -5,6 +5,7 @@ Node-pinba [![Build status][Build status image]][Build status URL]
 
 Pinba is a MySQL storage engine that acts as a realtime monitoring/statistics server
 using MySQL as a read-only interface.
+Node-pinba provides client for Pinba server that provides statistics sending from your node.js application.
 
 **This module has been tested with Node.js versions 0.8.19 and 0.9.8.**
 
