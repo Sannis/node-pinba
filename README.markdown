@@ -92,3 +92,7 @@ License
 -------
 
 MIT license. See license text in file [LICENSE](https://github.com/Sannis/node-pinba/blob/master/LICENSE).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Sannis/node-pinba/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
