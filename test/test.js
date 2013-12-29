@@ -131,8 +131,8 @@ describe('node-pinba', function () {
 
           assert.ok(!info.started, "Stopped");
 
-          assert.ok(info.value * 1000 < 101, "Less than 101");
-          assert.ok(info.value * 1000 > 99, "Greater than 99");
+          assert.ok(info.value * 1000 < 102, "Less than 102");
+          assert.ok(info.value * 1000 > 98, "Greater than 98");
 
           done();
         }, 100);
@@ -146,8 +146,8 @@ describe('node-pinba', function () {
 
         assert.ok(!info.started, "Stopped");
 
-        assert.ok(info.value * 1000 < 101, "Less than 101");
-        assert.ok(info.value * 1000 > 99, "Greater than 99");
+        assert.ok(info.value * 1000 < 102, "Less than 102");
+        assert.ok(info.value * 1000 > 98, "Greater than 98");
 
         assert.deepEqual(info.tags, {tag: 'tagValue'}, "Correct tags");
       });
