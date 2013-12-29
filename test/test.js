@@ -13,11 +13,11 @@ var assert = require("assert");
 
 var _ = require('lodash');
 
-var node_pinba = require('../');
+var Pinba = require('../');
 
-describe('node-pinba', function () {
+describe('pinba', function () {
   it('should export PinbaRequest', function () {
-    assert.ok(typeof node_pinba.PinbaRequest === 'function');
+    assert.ok(typeof Pinba.PinbaRequest === 'function');
   });
 
   describe('PinbaRequest', function () {
@@ -25,8 +25,13 @@ describe('node-pinba', function () {
       'setHostname',
       'setServerName',
       'setScriptName',
+      'setSchema',
       'setPinbaServer',
       'setPinbaPort',
+      'tagSet',
+      'tagGet',
+      'tagDelete',
+      'tagsGet',
       'timerStart',
       'timerStop',
       'timerAdd',
@@ -41,17 +46,18 @@ describe('node-pinba', function () {
       'flush'
     ];
     _.forEach(methods, function (method) {
-      var r = new node_pinba.PinbaRequest();
+      var r = new Pinba.PinbaRequest();
       it('should have method ' + method + '()', function () {
         assert.ok(typeof r[method] === 'function');
       });
     });
 
     it('should support parameters', function () {
-      var r = new node_pinba.PinbaRequest({
+      var r = new Pinba.PinbaRequest({
         hostname:     'HOSTNAME',
         server_name:  'SERVER_NAME',
         script_name:  'SCRIPT_NAME',
+        schema:       'SCHEMA',
         pinba_server: 'PINBA_SERVER',
         pinba_port:   'PINBA_PORT'
       });
@@ -61,6 +67,7 @@ describe('node-pinba', function () {
           r.hostname,
           r.server_name,
           r.script_name,
+          r.schema,
           r.pinba_server,
           r.pinba_port
         ],
@@ -68,6 +75,7 @@ describe('node-pinba', function () {
           'HOSTNAME',
           'SERVER_NAME',
           'SCRIPT_NAME',
+          'SCHEMA',
           'PINBA_SERVER',
           'PINBA_PORT'
         ]
@@ -75,11 +83,12 @@ describe('node-pinba', function () {
     });
 
     it('that may be changed through setters', function () {
-      var r = new node_pinba.PinbaRequest();
+      var r = new Pinba.PinbaRequest();
 
       r.setHostname('HOSTNAME');
       r.setServerName('SERVER_NAME');
       r.setScriptName('SCRIPT_NAME');
+      r.setSchema('SCHEMA');
       r.setPinbaServer('PINBA_SERVER');
       r.setPinbaPort('PINBA_PORT');
 
@@ -88,6 +97,7 @@ describe('node-pinba', function () {
           r.hostname,
           r.server_name,
           r.script_name,
+          r.schema,
           r.pinba_server,
           r.pinba_port
         ],
@@ -95,15 +105,59 @@ describe('node-pinba', function () {
           'HOSTNAME',
           'SERVER_NAME',
           'SCRIPT_NAME',
+          'SCHEMA',
           'PINBA_SERVER',
           'PINBA_PORT'
         ]
       );
     });
 
+    describe('tags', function () {
+      it('should by properly generated [tagSet+tagGet]', function () {
+        var r = new Pinba.PinbaRequest();
+
+        r.tagSet('tag1', 'value');
+
+        assert.equal(r.tagGet('tag1'), 'value', "Right tag value");
+      });
+
+      it('may be replaced [tagSet+tagSet+tagGet]', function () {
+        var r = new Pinba.PinbaRequest();
+
+        r.tagSet('tag1', 'value1');
+        r.tagSet('tag1', 'value2');
+
+        assert.equal(r.tagGet('tag1'), 'value2', "Right tag value");
+      });
+
+      it('may be deleted [tagSet+tagDelete+tagGet]', function () {
+        var r = new Pinba.PinbaRequest();
+
+        r.tagSet('tag1', 'value1');
+        r.tagDelete('tag1');
+
+        assert.ok(typeof r.tagGet('tag1') == 'undefined', "Undefined tag");
+      });
+
+      it('have multi-get [tagSet+tagSet+tagsGet]', function () {
+        var r = new Pinba.PinbaRequest();
+
+        r.tagSet('tag1', 'value1');
+        r.tagSet('tag2', 'value2');
+
+        assert.deepEqual(
+          r.tagsGet(),
+          {
+            'tag1': 'value1',
+            'tag2': 'value2'
+          }
+        );
+      });
+    });
+
     describe('timers', function () {
       it('should by properly generated [timerStart+timerStop]', function (done) {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer1 = r.timerStart();
         setTimeout(function () {
           r.timerStop(timer1);
@@ -122,7 +176,7 @@ describe('node-pinba', function () {
       });
 
       it('should properly return info [timerStart+timerStop+timerGetInfo]', function (done) {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer = r.timerStart();
         setTimeout(function () {
           r.timerStop(timer);
@@ -139,7 +193,7 @@ describe('node-pinba', function () {
       });
 
       it('should properly return info [timerAdd+timerGetInfo]', function () {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer = r.timerAdd({tag: 'tagValue'}, 0.100);
 
         var info = r.timerGetInfo(timer);
@@ -153,7 +207,7 @@ describe('node-pinba', function () {
       });
 
       it('may be deleted [timerDelete]', function () {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer1 = r.timerAdd({tag1: 'tag1value'}, 0.100);
         var timer2 = r.timerAdd({tag2: 'tag2value'}, 0.100);
 
@@ -163,7 +217,7 @@ describe('node-pinba', function () {
       });
 
       it('should properly works with tags [timerTagsMerge+timerTagsReplace]', function () {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer1 = r.timerStart({tag1: 'tag1value'});
         var timer2 = r.timerStart({tag2: 'tag2value'});
 
@@ -182,7 +236,7 @@ describe('node-pinba', function () {
       });
 
       it('should properly works with data [timerDataMerge+timerDataReplace]', function () {
-        var r = new node_pinba.PinbaRequest();
+        var r = new Pinba.PinbaRequest();
         var timer1 = r.timerStart({}, {data1: 'data1value'});
         var timer2 = r.timerStart({}, {data2: 'data2value'});
 
