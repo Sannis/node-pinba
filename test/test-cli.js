@@ -10,8 +10,9 @@
 var PinbaRequest = require('../').PinbaRequest;
 
 var pr = new PinbaRequest({
-  server_name: 'example.com',
-  script_name: '/handler'
+  pinba_server: 'cpp1.d3',
+  server_name:  'node.pinba',
+  script_name:  '/handler'
 });
 
 console.log('Started.');
