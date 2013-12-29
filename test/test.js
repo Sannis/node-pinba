@@ -44,6 +44,7 @@ describe('pinba', function () {
         'timerGetInfo',
         'timersStop',
         'getInfo',
+        'getGPBMessageData',
         'flush'
       ];
       _.forEach(methods, function (method) {
@@ -260,7 +261,7 @@ describe('pinba', function () {
     });
 
     describe('and finally', function () {
-      it('getInfo() should return request data', function () {
+      it('getInfo() should return request info', function () {
         var r = new Pinba.Request();
 
         r.setHostname('HOSTNAME');
@@ -285,11 +286,11 @@ describe('pinba', function () {
         assert.deepEqual(
           info,
           {
-            req_count:      1,
             hostname:       'HOSTNAME',
             server_name:    'SERVER_NAME',
             script_name:    'SCRIPT_NAME',
             schema:         'SCHEMA',
+            req_count:      1,
             timers:         [
               {
                 value: 0.1,
@@ -308,6 +309,40 @@ describe('pinba', function () {
               tag1: 'tvalue1',
               tag2: 'tvalue2'
             }
+          }
+        );
+      });
+
+      it('getGPBMessageData() should return GPB message data', function () {
+        var r = new Pinba.Request();
+
+        r.setHostname('HOSTNAME');
+        r.setServerName('SERVER_NAME');
+        r.setScriptName('SCRIPT_NAME');
+        r.setSchema('SCHEMA');
+
+        r.tagSet('tag1', 'tvalue1');
+        r.tagSet('tag2', 'tvalue2');
+
+        r.timerAdd({tag1: 'value1'}, 0.1);
+        r.timerAdd({tag2: 'value2'}, 0.2);
+
+        var data = r.getGPBMessageData();
+
+        delete data.mem_peak_usage;
+        delete data.request_time;
+        delete data.ru_utime;
+        delete data.ru_stime;
+        delete data.doc_size;
+
+        assert.deepEqual(
+          data,
+          {
+            hostname:       'HOSTNAME',
+            server_name:    'SERVER_NAME',
+            script_name:    'SCRIPT_NAME',
+            schema:         'SCHEMA',
+            request_count:  1
           }
         );
       });
