@@ -19,17 +19,6 @@ Check out the [Github repo] for the source code.
 [Github repo]: https://github.com/Sannis/node-pinba
 
 
-TODO
-----
-
- - [ ] Flush method options
- - [ ] Tests for remaining methods
- - [ ] Middlewares for popular node.js frameworks
- - [ ] Hype!
-
-You can help me with any of this, see "Contributing" section below.
-
-
 Installation
 ------------
 
