@@ -10,10 +10,11 @@
 var PinbaRequest = require('../').Request;
 
 var pr = new PinbaRequest({
-  pinba_server: 'cpp1.d3',
+  hostname:     'node-pinba',
   schema:       'http',
-  server_name:  'node.pinba',
-  script_name:  '/handler'
+  server_name:  'node-pinba.tld',
+  script_name:  '/handler',
+  pinba_server: 'cpp1.d3'
 });
 
 console.log('Started.');
@@ -26,7 +27,9 @@ setTimeout(function () {
   console.log('With one stopped timer.');
   console.log(pr.getInfo());
 
-  pr.flush();
+  pr.flush(function (err) {
+    if (err) throw err;
+  });
 
   console.log('Flushed.');
 }, 333);
