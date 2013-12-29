@@ -263,6 +263,7 @@ describe('pinba', function () {
       it('getInfo() should return request data', function () {
         var r = new Pinba.Request();
 
+        r.setHostname('HOSTNAME');
         r.setServerName('SERVER_NAME');
         r.setScriptName('SCRIPT_NAME');
         r.setSchema('SCHEMA');
@@ -285,6 +286,7 @@ describe('pinba', function () {
           info,
           {
             req_count:      1,
+            hostname:       'HOSTNAME',
             server_name:    'SERVER_NAME',
             script_name:    'SCRIPT_NAME',
             schema:         'SCHEMA',
