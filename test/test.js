@@ -21,95 +21,99 @@ describe('pinba', function () {
   });
 
   describe('PinbaRequest', function () {
-    var methods = [
-      'setHostname',
-      'setServerName',
-      'setScriptName',
-      'setSchema',
-      'setPinbaServer',
-      'setPinbaPort',
-      'tagSet',
-      'tagGet',
-      'tagDelete',
-      'tagsGet',
-      'timerStart',
-      'timerStop',
-      'timerAdd',
-      'timerDelete',
-      'timerTagsMerge',
-      'timerTagsReplace',
-      'timerDataMerge',
-      'timerDataReplace',
-      'timerGetInfo',
-      'timersStop',
-      'getInfo',
-      'flush'
-    ];
-    _.forEach(methods, function (method) {
-      var r = new Pinba.Request();
-      it('should have method ' + method + '()', function () {
-        assert.ok(typeof r[method] === 'function');
+    describe('methods', function () {
+      var methods = [
+        'setHostname',
+        'setServerName',
+        'setScriptName',
+        'setSchema',
+        'setPinbaServer',
+        'setPinbaPort',
+        'tagSet',
+        'tagGet',
+        'tagDelete',
+        'tagsGet',
+        'timerStart',
+        'timerStop',
+        'timerAdd',
+        'timerDelete',
+        'timerTagsMerge',
+        'timerTagsReplace',
+        'timerDataMerge',
+        'timerDataReplace',
+        'timerGetInfo',
+        'timersStop',
+        'getInfo',
+        'flush'
+      ];
+      _.forEach(methods, function (method) {
+        var r = new Pinba.Request();
+        it('should have method ' + method + '()', function () {
+          assert.ok(typeof r[method] === 'function');
+        });
       });
     });
 
-    it('should support parameters', function () {
-      var r = new Pinba.Request({
-        hostname:     'HOSTNAME',
-        server_name:  'SERVER_NAME',
-        script_name:  'SCRIPT_NAME',
-        schema:       'SCHEMA',
-        pinba_server: 'PINBA_SERVER',
-        pinba_port:   'PINBA_PORT'
+    describe('settings', function () {
+      it('should support parameters', function () {
+        var r = new Pinba.Request({
+          hostname:     'HOSTNAME',
+          server_name:  'SERVER_NAME',
+          script_name:  'SCRIPT_NAME',
+          schema:       'SCHEMA',
+          pinba_server: 'PINBA_SERVER',
+          pinba_port:   'PINBA_PORT'
+        });
+
+        assert.deepEqual(
+          [
+            r.hostname,
+            r.server_name,
+            r.script_name,
+            r.schema,
+            r.pinba_server,
+            r.pinba_port
+          ],
+          [
+            'HOSTNAME',
+            'SERVER_NAME',
+            'SCRIPT_NAME',
+            'SCHEMA',
+            'PINBA_SERVER',
+            'PINBA_PORT'
+          ]
+        );
       });
 
-      assert.deepEqual(
-        [
-          r.hostname,
-          r.server_name,
-          r.script_name,
-          r.schema,
-          r.pinba_server,
-          r.pinba_port
-        ],
-        [
-          'HOSTNAME',
-          'SERVER_NAME',
-          'SCRIPT_NAME',
-          'SCHEMA',
-          'PINBA_SERVER',
-          'PINBA_PORT'
-        ]
-      );
-    });
+      it('that may be changed through setters', function () {
+        var r = new Pinba.Request();
 
-    it('that may be changed through setters', function () {
-      var r = new Pinba.Request();
+        r.setHostname('HOSTNAME');
+        r.setServerName('SERVER_NAME');
+        r.setScriptName('SCRIPT_NAME');
+        r.setSchema('SCHEMA');
+        r.setPinbaServer('PINBA_SERVER');
+        r.setPinbaPort('PINBA_PORT');
 
-      r.setHostname('HOSTNAME');
-      r.setServerName('SERVER_NAME');
-      r.setScriptName('SCRIPT_NAME');
-      r.setSchema('SCHEMA');
-      r.setPinbaServer('PINBA_SERVER');
-      r.setPinbaPort('PINBA_PORT');
-
-      assert.deepEqual(
-        [
-          r.hostname,
-          r.server_name,
-          r.script_name,
-          r.schema,
-          r.pinba_server,
-          r.pinba_port
-        ],
-        [
-          'HOSTNAME',
-          'SERVER_NAME',
-          'SCRIPT_NAME',
-          'SCHEMA',
-          'PINBA_SERVER',
-          'PINBA_PORT'
-        ]
-      );
+        assert.deepEqual(
+          [
+            r.hostname,
+            r.server_name,
+            r.script_name,
+            r.schema,
+            r.pinba_server,
+            r.pinba_port
+          ],
+          [
+            'HOSTNAME',
+            'SERVER_NAME',
+            'SCRIPT_NAME',
+            'SCHEMA',
+            'PINBA_SERVER',
+            'PINBA_PORT'
+          ]
+        );
+      });
     });
 
     describe('tags', function () {
@@ -252,6 +256,58 @@ describe('pinba', function () {
         r.timerDataReplace(timer1, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'});
         info1 = r.timerGetInfo(timer1);
         assert.deepEqual(info1.data, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'}, "Data replaced");
+      });
+    });
+
+    describe('and finally', function () {
+      it('getInfo() should return request data', function () {
+        var r = new Pinba.Request();
+
+        r.setServerName('SERVER_NAME');
+        r.setScriptName('SCRIPT_NAME');
+        r.setSchema('SCHEMA');
+
+        r.tagSet('tag1', 'tvalue1');
+        r.tagSet('tag2', 'tvalue2');
+
+        r.timerAdd({tag1: 'value1'}, 0.1);
+        r.timerAdd({tag2: 'value2'}, 0.2);
+
+        var info = r.getInfo();
+
+        delete info.mem_peak_usage;
+        delete info.req_time;
+        delete info.ru_utime;
+        delete info.ru_stime;
+        delete info.doc_size;
+
+        assert.deepEqual(
+          info,
+          {
+            req_count:      1,
+            server_name:    'SERVER_NAME',
+            script_name:    'SCRIPT_NAME',
+            schema:         'SCHEMA',
+            timers:         [
+              {
+                value: 0.1,
+                started: false,
+                tags: {tag1: 'value1'},
+                data: null
+              },
+              {
+                value: 0.2,
+                started: false,
+                tags: {tag2: 'value2'},
+                data: null
+              }
+            ],
+            tags:           {
+              tag1: 'tvalue1',
+              tag2: 'tvalue2'
+            }
+          }
+        );
       });
     });
   });

@@ -11,6 +11,7 @@ var PinbaRequest = require('../').Request;
 
 var pr = new PinbaRequest({
   pinba_server: 'cpp1.d3',
+  schema:       'http',
   server_name:  'node.pinba',
   script_name:  '/handler'
 });
