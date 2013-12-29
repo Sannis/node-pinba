@@ -25,7 +25,6 @@ TODO
  - [ ] Flush method options
  - [ ] Tests for remaining methods
  - [ ] Middlewares for popular node.js frameworks
- - [ ] Separate GPB code into module
  - [ ] Hype!
 
 You can help me with any of this, see "Contributing" section below.

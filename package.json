@@ -1,6 +1,6 @@
 { "name" : "pinba"
 , "description" : "Pinba for Node.js"
-, "keywords" : ["pinba", "mysql", "monitoring", "profiling"]
+, "keywords" : ["pinba", "monitoring", "profiling"]
 , "homepage" : "http://sannis.github.com/node-pinba"
 , "version" : "0.0.0"
 , "author" :
@@ -20,10 +20,13 @@
   }
 , "main" : "./lib/pinba.js"
 , "scripts" : { "test" : "make test" }
-, "engines" : { "node" : "0.6.x || 0.7.x || 0.8.x || 0.9.x" }
-, "dependencies" : { "lodash" : ">= 1.0.0" }
+, "engines" : { "node" : "0.8.x || 0.9.x || 0.10.x" }
+, "dependencies" :
+  { "lodash" : ">= 1.0.0"
+  , "gpb"    : ">= 0.8.1"
+  }
 , "devDependencies" :
-  { "mocha" : ">= 1.8.1"
+  { "mocha"    : ">= 1.8.1"
   , "nodelint" : ">= 0.6"
   , "ndoc"     : ">= 2.0.5"
   }
