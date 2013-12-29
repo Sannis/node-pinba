@@ -7,7 +7,7 @@
  * See license text in LICENSE file
  */
 
-var PinbaRequest = require('../').PinbaRequest;
+var PinbaRequest = require('../').Request;
 
 var pr = new PinbaRequest({
   pinba_server: 'cpp1.d3',

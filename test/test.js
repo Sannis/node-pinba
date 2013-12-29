@@ -16,8 +16,8 @@ var _ = require('lodash');
 var Pinba = require('../');
 
 describe('pinba', function () {
-  it('should export PinbaRequest', function () {
-    assert.ok(typeof Pinba.PinbaRequest === 'function');
+  it('should export Request class', function () {
+    assert.ok(typeof Pinba.Request === 'function');
   });
 
   describe('PinbaRequest', function () {
@@ -46,14 +46,14 @@ describe('pinba', function () {
       'flush'
     ];
     _.forEach(methods, function (method) {
-      var r = new Pinba.PinbaRequest();
+      var r = new Pinba.Request();
       it('should have method ' + method + '()', function () {
         assert.ok(typeof r[method] === 'function');
       });
     });
 
     it('should support parameters', function () {
-      var r = new Pinba.PinbaRequest({
+      var r = new Pinba.Request({
         hostname:     'HOSTNAME',
         server_name:  'SERVER_NAME',
         script_name:  'SCRIPT_NAME',
@@ -83,7 +83,7 @@ describe('pinba', function () {
     });
 
     it('that may be changed through setters', function () {
-      var r = new Pinba.PinbaRequest();
+      var r = new Pinba.Request();
 
       r.setHostname('HOSTNAME');
       r.setServerName('SERVER_NAME');
@@ -114,7 +114,7 @@ describe('pinba', function () {
 
     describe('tags', function () {
       it('should by properly generated [tagSet+tagGet]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
 
         r.tagSet('tag1', 'value');
 
@@ -122,7 +122,7 @@ describe('pinba', function () {
       });
 
       it('may be replaced [tagSet+tagSet+tagGet]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
 
         r.tagSet('tag1', 'value1');
         r.tagSet('tag1', 'value2');
@@ -131,7 +131,7 @@ describe('pinba', function () {
       });
 
       it('may be deleted [tagSet+tagDelete+tagGet]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
 
         r.tagSet('tag1', 'value1');
         r.tagDelete('tag1');
@@ -140,7 +140,7 @@ describe('pinba', function () {
       });
 
       it('have multi-get [tagSet+tagSet+tagsGet]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
 
         r.tagSet('tag1', 'value1');
         r.tagSet('tag2', 'value2');
@@ -157,7 +157,7 @@ describe('pinba', function () {
 
     describe('timers', function () {
       it('should by properly generated [timerStart+timerStop]', function (done) {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer1 = r.timerStart();
         setTimeout(function () {
           r.timerStop(timer1);
@@ -176,7 +176,7 @@ describe('pinba', function () {
       });
 
       it('should properly return info [timerStart+timerStop+timerGetInfo]', function (done) {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer = r.timerStart();
         setTimeout(function () {
           r.timerStop(timer);
@@ -193,7 +193,7 @@ describe('pinba', function () {
       });
 
       it('should properly return info [timerAdd+timerGetInfo]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer = r.timerAdd({tag: 'tagValue'}, 0.100);
 
         var info = r.timerGetInfo(timer);
@@ -207,7 +207,7 @@ describe('pinba', function () {
       });
 
       it('may be deleted [timerDelete]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer1 = r.timerAdd({tag1: 'tag1value'}, 0.100);
         var timer2 = r.timerAdd({tag2: 'tag2value'}, 0.100);
 
@@ -217,7 +217,7 @@ describe('pinba', function () {
       });
 
       it('should properly works with tags [timerTagsMerge+timerTagsReplace]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer1 = r.timerStart({tag1: 'tag1value'});
         var timer2 = r.timerStart({tag2: 'tag2value'});
 
@@ -236,7 +236,7 @@ describe('pinba', function () {
       });
 
       it('should properly works with data [timerDataMerge+timerDataReplace]', function () {
-        var r = new Pinba.PinbaRequest();
+        var r = new Pinba.Request();
         var timer1 = r.timerStart({}, {data1: 'data1value'});
         var timer2 = r.timerStart({}, {data2: 'data2value'});
 
