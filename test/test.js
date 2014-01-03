@@ -283,8 +283,6 @@ describe('pinba', function () {
         delete info.ru_stime;
         delete info.doc_size;
 
-        console.log(info);
-
         assert.deepEqual(
           info,
           {
