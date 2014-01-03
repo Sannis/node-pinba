@@ -2,7 +2,7 @@
 , "description" : "Pinba for Node.js"
 , "keywords" : ["pinba", "monitoring", "profiling"]
 , "homepage" : "http://sannis.github.com/node-pinba"
-, "version" : "0.7.1"
+, "version" : "0.7.2"
 , "author" :
   { "name" : "Oleg Efimov"
   , "email" : "efimovov@gmail.com"
