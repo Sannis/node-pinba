@@ -110,7 +110,7 @@ Fully supported:
 TODO:
 
 ```
-    uint32 document_size  = 5;
+    uint32 document_size
     uint32 memory_footprint
 
     float ru_utime
