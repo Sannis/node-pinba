@@ -298,13 +298,13 @@ describe('pinba', function () {
                 value: 0.1,
                 started: false,
                 tags: {tag1: 'value1'},
-                data: null
+                data: undefined
               },
               {
                 value: 0.2,
                 started: false,
                 tags: {tag2: 'value2'},
-                data: null
+                data: undefined
               }
             ],
             tags:           {
