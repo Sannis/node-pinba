@@ -269,11 +269,13 @@ describe('pinba', function () {
         r.setScriptName('SCRIPT_NAME');
         r.setSchema('SCHEMA');
 
-        r.tagSet('tag1', 'tvalue1');
-        r.tagSet('tag2', 'tvalue2');
+        r.tagSet('tag1', 'value1');
+        r.tagSet('tag2', 'value2');
+        r.tagSet('tag3', 'value2');
 
         r.timerAdd({tag1: 'value1'}, 0.1);
-        r.timerAdd({tag2: 'value2'}, 0.2);
+        r.timerAdd({tag2: 'value1'}, 0.2);
+        r.timerAdd({tag3: 'value2'}, 0.3);
 
         var info = r.getInfo();
 
@@ -301,13 +303,20 @@ describe('pinba', function () {
               {
                 value: 0.2,
                 started: false,
-                tags: {tag2: 'value2'},
+                tags: {tag2: 'value1'},
+                data: undefined
+              },
+              {
+                value: 0.3,
+                started: false,
+                tags: {tag3: 'value2'},
                 data: undefined
               }
             ],
             tags:           {
-              tag1: 'tvalue1',
-              tag2: 'tvalue2'
+              tag1: 'value1',
+              tag2: 'value2',
+              tag3: 'value2'
             }
           }
         );
@@ -321,19 +330,23 @@ describe('pinba', function () {
         r.setScriptName('SCRIPT_NAME');
         r.setSchema('SCHEMA');
 
-        r.tagSet('tag1', 'tvalue1');
-        r.tagSet('tag2', 'tvalue2');
+        r.tagSet('tag1', 'value1');
+        r.tagSet('tag2', 'value2');
+        r.tagSet('tag3', 'value2');
 
         r.timerAdd({tag1: 'value1'}, 0.1);
-        r.timerAdd({tag2: 'value2'}, 0.2);
+        r.timerAdd({tag2: 'value1'}, 0.2);
+        r.timerAdd({tag3: 'value2'}, 0.3);
 
         var data = r.getGPBMessageData();
 
         delete data.request_time;
-        delete data.memory_peak;
         delete data.document_size;
+        delete data.memory_peak;
         delete data.ru_utime;
         delete data.ru_stime;
+        delete data.status;
+        delete data.memory_footprint;
 
         assert.deepEqual(
           data,
@@ -342,7 +355,19 @@ describe('pinba', function () {
             server_name:    'SERVER_NAME',
             script_name:    'SCRIPT_NAME',
             schema:         'SCHEMA',
-            request_count:  1
+
+            request_count:    1,
+
+            tag_name:         [0, 2, 4],
+            tag_value:        [1, 3, 3],
+
+            dictionary:       [
+              'tag1',
+              'value1',
+              'tag2',
+              'value2',
+              'tag3'
+            ]
           }
         );
       });

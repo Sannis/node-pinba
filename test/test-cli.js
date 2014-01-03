@@ -17,6 +17,9 @@ var pr = new PinbaRequest({
   pinba_server: 'cpp1.d3'
 });
 
+pr.tagSet('tag1', 'value');
+pr.tagSet('tag2', 'value');
+
 console.log('Started.');
 console.log(pr.getInfo());
 

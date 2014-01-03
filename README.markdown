@@ -94,6 +94,9 @@ Fully supported:
     float request_time
 
     uint32 memory_peak
+
+    uint32 tag_name
+    uint32 tag_value
 ```
 
 TODO:
@@ -110,8 +113,6 @@ TODO:
     uint32 timer_tag_value
     string dictionary
     uint32 status
-    uint32 tag_name
-    uint32 tag_value
 ```
 
 
