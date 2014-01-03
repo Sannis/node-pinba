@@ -20,15 +20,15 @@
   }
 , "main" : "./lib/pinba.js"
 , "scripts" : { "test" : "make test" }
-, "engines" : { "node" : "0.8.x || 0.9.x || 0.10.x" }
+, "engines" : { "node" : ">= 0.8.0" }
 , "dependencies" :
-  { "lodash" : ">= 1.0.0"
-  , "gpb"    : ">= 0.8.1"
+  { "lodash" : "~2.4.1"
+  , "gpb"    : "~0.8.2"
   }
 , "devDependencies" :
-  { "mocha"    : ">= 1.8.1"
-  , "sinon"    : ">= 1.7.3"
-  , "nodelint" : ">= 0.6"
-  , "ndoc"     : ">= 2.0.5"
+  { "mocha"  : "~1.16.2"
+  , "sinon"  : "~1.7.3"
+  , "jshint" : "~2.4.1"
+  , "ndoc"   : "~3.1.0"
   }
 }

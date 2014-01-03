@@ -22,8 +22,7 @@ test: npm-install
 		./node_modules/.bin/mocha --slow 333 --reporter spec test/test.js
 
 lint: npm-install
-		./node_modules/.bin/nodelint --config ./nodelint.conf ./package.json ./lib
-		./node_modules/.bin/nodelint --config ./nodelint.conf ./tests
+		./node_modules/.bin/jshint . --show-non-errors
 
 doc: ./lib/pinba.js
 		rm -rf ${API_DEST_DIR}
