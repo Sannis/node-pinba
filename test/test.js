@@ -18,11 +18,22 @@ var sinon = require("sinon");
 var Pinba = require('../');
 
 describe('pinba', function () {
+  var constants = [
+    'FLUSH_ONLY_STOPPED_TIMERS',
+    'FLUSH_RESET_DATA',
+    'ONLY_RUNNING_TIMERS'
+  ];
+  _.forEach(constants, function (constant) {
+    it('should export ' + constant + ' constant', function () {
+      assert.ok(constant in Pinba);
+    });
+  });
+
   it('should export Request class', function () {
     assert.ok(typeof Pinba.Request === 'function');
   });
 
-  describe('PinbaRequest', function () {
+  describe('Request', function () {
     describe('methods', function () {
       var methods = [
         'setHostname',
@@ -476,8 +487,10 @@ describe('pinba', function () {
         r.setSchema('SCHEMA');
 
         r.flush({
-          script_name: 'SCRIPT_NAME2',
-          schema:      'SCHEMA2'
+          data: {
+            script_name: 'SCRIPT_NAME2',
+            schema:      'SCHEMA2'
+          }
         });
 
         assert.ok(socket_create_stub.calledOnce);
