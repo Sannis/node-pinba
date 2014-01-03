@@ -1,7 +1,11 @@
-Node-pinba [![Build status][Build status image]][Build status URL]
-===================================================================
+Node-pinba
+==========
 
-**[Pinba] module for [Node.js].**
+[![NPM version][NPM version image]][NPM version URL] [![Build status][Build status image]][Build status URL]
+
+-----
+
+**[Pinba] module for [node.js].**
 
 Pinba is a MySQL storage engine that acts as a realtime monitoring/statistics server
 using MySQL as a read-only interface.
@@ -12,7 +16,10 @@ Node-pinba provides client for Pinba server that provides statistics sending fro
 Check out the [Github repo] for the source code.
 
 [Pinba]: http://pinba.org/
-[Node.js]: http://nodejs.org/
+[node.js]: http://nodejs.org/
+
+[NPM version image]: https://badge.fury.io/js/pinba.png
+[NPM version URL]: http://badge.fury.io/js/pinba
 [Build status image]: https://secure.travis-ci.org/Sannis/node-pinba.png?branch=master
 [Build status URL]: http://travis-ci.org/Sannis/node-pinba
 
