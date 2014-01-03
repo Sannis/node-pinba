@@ -343,10 +343,11 @@ describe('pinba', function () {
         var data = r.getGPBMessageData();
 
         delete data.request_time;
+        delete data.memory_peak;
         delete data.document_size;
+        delete data.status;
         delete data.ru_utime;
         delete data.ru_stime;
-        delete data.status;
 
         var expected_data = {
           hostname:       'HOSTNAME',
