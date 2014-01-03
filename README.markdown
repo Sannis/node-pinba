@@ -93,8 +93,6 @@ Fully supported:
     uint32 request_count
     float request_time
 
-    uint32 memory_peak
-
     string dictionary
 
     uint32 tag_name
@@ -111,12 +109,18 @@ TODO:
 
 ```
     uint32 document_size
-    uint32 memory_footprint
 
     float ru_utime
     float ru_stime
 
     uint32 status
+```
+
+Cannot be implemented:
+
+```
+    uint32 memory_peak
+    uint32 memory_footprint
 ```
 
 

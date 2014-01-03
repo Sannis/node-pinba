@@ -279,11 +279,9 @@ describe('pinba', function () {
 
         var info = r.getInfo();
 
-        delete info.mem_peak_usage;
         delete info.req_time;
         delete info.ru_utime;
         delete info.ru_stime;
-        delete info.doc_size;
 
         assert.deepEqual(
           info,
@@ -346,11 +344,9 @@ describe('pinba', function () {
 
         delete data.request_time;
         delete data.document_size;
-        delete data.memory_peak;
         delete data.ru_utime;
         delete data.ru_stime;
         delete data.status;
-        delete data.memory_footprint;
 
         var expected_data = {
           hostname:       'HOSTNAME',
