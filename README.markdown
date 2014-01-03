@@ -95,6 +95,8 @@ Fully supported:
 
     uint32 memory_peak
 
+    string dictionary
+
     uint32 tag_name
     uint32 tag_value
 ```
@@ -104,14 +106,16 @@ TODO:
 ```
     uint32 document_size  = 5;
     uint32 memory_footprint
+
     float ru_utime
     float ru_stime
+
     uint32 timer_hit_count
     float timer_value
     uint32 timer_tag_count
     uint32 timer_tag_name
     uint32 timer_tag_value
-    string dictionary
+
     uint32 status
 ```
 
