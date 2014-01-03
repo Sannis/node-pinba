@@ -105,15 +105,18 @@ Fully supported:
     uint32 timer_tag_value
 ```
 
-TODO:
+Allowed to be passes to flush() method:
 
 ```
     uint32 document_size
+    uint32 status
+```
 
+TODO:
+
+```
     float ru_utime
     float ru_stime
-
-    uint32 status
 ```
 
 Cannot be implemented:
