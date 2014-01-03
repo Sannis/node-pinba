@@ -21,7 +21,7 @@ describe('pinba', function () {
   var constants = [
     'FLUSH_ONLY_STOPPED_TIMERS',
     'FLUSH_RESET_DATA',
-    'ONLY_RUNNING_TIMERS'
+    'ONLY_STOPPED_TIMERS'
   ];
   _.forEach(constants, function (constant) {
     it('should export ' + constant + ' constant', function () {
@@ -56,6 +56,7 @@ describe('pinba', function () {
         'timerDataReplace',
         'timerGetInfo',
         'timersStop',
+        'timersGet',
         'getInfo',
         'getGPBMessageData',
         'flush'
@@ -270,6 +271,41 @@ describe('pinba', function () {
         r.timerDataReplace(timer1, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'});
         info1 = r.timerGetInfo(timer1);
         assert.deepEqual(info1.data, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'}, "Data replaced");
+      });
+
+      it('timersStop() should stop all remaining timers', function () {
+        var r = new Pinba.Request();
+        var timer1 = r.timerStart({}, {data1: 'data1value'});
+        var timer2 = r.timerStart({}, {data2: 'data2value'});
+
+        r.timerStop(timer1);
+
+        r.timersStop();
+
+        var info2 = r.timerGetInfo(timer2);
+        assert.equal(info2.started, false, "timer2 stopped");
+      });
+
+      it('timersGet() should return timers', function () {
+        var r = new Pinba.Request();
+        var timer1 = r.timerStart({}, {data1: 'data1value'});
+        var timer2 = r.timerStart({}, {data2: 'data2value'});
+
+        r.timerStop(timer1);
+
+        var timers = r.timersGet();
+        assert.deepEqual(timers, [timer1, timer2]);
+      });
+
+      it('timersGet() should support ONLY_STOPPED_TIMERS flag', function () {
+        var r = new Pinba.Request();
+        var timer1 = r.timerStart({}, {data1: 'data1value'});
+        var timer2 = r.timerStart({}, {data2: 'data2value'});
+
+        r.timerStop(timer1);
+
+        var timers = r.timersGet(Pinba.ONLY_STOPPED_TIMERS);
+        assert.deepEqual(timers, [timer1]);
       });
     });
 
