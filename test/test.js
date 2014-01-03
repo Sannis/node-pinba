@@ -329,11 +329,11 @@ describe('pinba', function () {
 
         var data = r.getGPBMessageData();
 
-        delete data.mem_peak_usage;
         delete data.request_time;
+        delete data.memory_peak;
+        delete data.document_size;
         delete data.ru_utime;
         delete data.ru_stime;
-        delete data.doc_size;
 
         assert.deepEqual(
           data,
