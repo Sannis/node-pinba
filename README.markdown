@@ -119,7 +119,7 @@ TODO:
     float ru_stime
 ```
 
-Cannot be implemented:
+Cannot be implemented properly:
 
 ```
     uint32 memory_peak
