@@ -99,6 +99,12 @@ Fully supported:
 
     uint32 tag_name
     uint32 tag_value
+
+    uint32 timer_hit_count
+    float timer_value
+    uint32 timer_tag_count
+    uint32 timer_tag_name
+    uint32 timer_tag_value
 ```
 
 TODO:
@@ -109,12 +115,6 @@ TODO:
 
     float ru_utime
     float ru_stime
-
-    uint32 timer_hit_count
-    float timer_value
-    uint32 timer_tag_count
-    uint32 timer_tag_name
-    uint32 timer_tag_value
 
     uint32 status
 ```

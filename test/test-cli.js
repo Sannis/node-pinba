@@ -23,9 +23,12 @@ pr.tagSet('tag2', 'value');
 console.log('Started.');
 console.log(pr.getInfo());
 
-var timer = pr.timerStart({type: 'db', op: 'select'}, {some: 'data'});
+var timer1 = pr.timerStart({tag1: 'value-value'}, {some1: 'data'});
+var timer2 = pr.timerStart({tag2: 'value-value'}, {some2: 'data'});
+
+var timer3 = pr.timerStart({type: 'db', op: 'select'}, {some3: 'data'});
 setTimeout(function () {
-  pr.timerStop(timer);
+  pr.timerStop(timer3);
 
   console.log('With one stopped timer.');
   console.log(pr.getInfo());

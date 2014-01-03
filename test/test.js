@@ -338,6 +338,10 @@ describe('pinba', function () {
         r.timerAdd({tag2: 'value1'}, 0.2);
         r.timerAdd({tag3: 'value2'}, 0.3);
 
+        r.timerAdd({tag3: 'value2'}, 0.4);
+
+        r.timerAdd({tag1: 'value1', tag3: 'value2'}, 0.8);
+
         var data = r.getGPBMessageData();
 
         delete data.request_time;
@@ -348,28 +352,42 @@ describe('pinba', function () {
         delete data.status;
         delete data.memory_footprint;
 
-        assert.deepEqual(
-          data,
-          {
-            hostname:       'HOSTNAME',
-            server_name:    'SERVER_NAME',
-            script_name:    'SCRIPT_NAME',
-            schema:         'SCHEMA',
+        var expected_data = {
+          hostname:       'HOSTNAME',
+          server_name:    'SERVER_NAME',
+          script_name:    'SCRIPT_NAME',
+          schema:         'SCHEMA',
 
-            request_count:    1,
+          request_count:    1,
 
-            tag_name:         [0, 2, 4],
-            tag_value:        [1, 3, 3],
+          tag_name:         [0, 2, 4],
+          tag_value:        [1, 3, 3],
 
-            dictionary:       [
-              'tag1',
-              'value1',
-              'tag2',
-              'value2',
-              'tag3'
-            ]
-          }
-        );
+          timer_hit_count:  [1, 1, 2, 1],
+          timer_value:      [0.1, 0.2, 0.7, 0.8],
+          timer_tag_count:  [1, 1, 1, 2],
+          timer_tag_name:   [0, 2, 4, 0, 4],
+          timer_tag_value:  [1, 1, 3, 1, 3],
+
+          dictionary:       [
+            'tag1',
+            'value1',
+            'tag2',
+            'value2',
+            'tag3'
+          ]
+        };
+
+        assert.deepEqual(data.tag_name, expected_data.tag_name);
+        assert.deepEqual(data.tag_value, expected_data.tag_value);
+
+        assert.deepEqual(data.timer_hit_count, expected_data.timer_hit_count);
+        assert.deepEqual(data.timer_value, expected_data.timer_value);
+        assert.deepEqual(data.timer_tag_count, expected_data.timer_tag_count);
+        assert.deepEqual(data.timer_tag_name, expected_data.timer_tag_name);
+        assert.deepEqual(data.timer_tag_value, expected_data.timer_tag_value);
+
+        assert.deepEqual(data, expected_data);
       });
     });
   });
