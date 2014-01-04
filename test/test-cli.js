@@ -33,9 +33,7 @@ setTimeout(function () {
   console.log('With one stopped timer.');
   console.log(pr.getInfo());
 
-  pr.flush(function (err) {
-    if (err) throw err;
-  });
+  pr.flush();
 
   console.log('Flushed.');
 }, 333);
