@@ -443,9 +443,11 @@ describe('pinba', function () {
         var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
         gpb_encode_stub.returns(1);
 
+        var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({
+          on:   socket_on_spy,
           send: socket_send_spy
         });
         // End
@@ -460,6 +462,7 @@ describe('pinba', function () {
         r.flush();
 
         assert.ok(socket_create_stub.calledOnce);
+        assert.ok(socket_on_spy.calledOnce);
         assert.ok(socket_send_spy.calledOnce);
 
         var expected_data = {
@@ -508,9 +511,11 @@ describe('pinba', function () {
         var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
         gpb_encode_stub.returns(1);
 
+        var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({
+          on:   socket_on_spy,
           send: socket_send_spy
         });
         // End
@@ -530,6 +535,7 @@ describe('pinba', function () {
         });
 
         assert.ok(socket_create_stub.calledOnce);
+        assert.ok(socket_on_spy.calledOnce);
         assert.ok(socket_send_spy.calledOnce);
 
         var expected_data = {
