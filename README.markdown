@@ -39,19 +39,19 @@ and collect information about requests to your server.
 [npm]: https://github.com/isaacs/npm
 
 
-Usage
------
+Usage with vanilla node.js
+--------------------------
 
 Because Node.js operates in single-threaded event loop and does not orient only for HTTP servers,
 there was some differences between this module and original Pinba for PHP. Mostly, there is no
-isolate requests in Node.js, so you should take care of creating `PinbaRequest` instance
+isolate requests in Node.js, so you should take care of creating `Pinba.Request` instance
 for each code chain that you mention as request and call `PinbaRequest` instance `flush` method at response end.
 
 There is a simple example how to capture timer value around database call during request:
 
 ```js
 var http = require('http');
-var PinbaRequest = require('pinba').PinbaRequest;
+var PinbaRequest = require('pinba').Request;
 var db = require('./my_db.js');
 
 http.createServer(function (req, res) {
@@ -74,6 +74,14 @@ http.createServer(function (req, res) {
 ```
 
 Read this module API docs and original Pinba docs for more information.
+
+
+Usage with node.js frameworks
+-----------------------------
+
+Connect Pinba middleware can be founded [here]. Feel free to write any for other frameworks.
+
+[here]: https://github.com/Sannis/connect-pinba
 
 
 Supported features
