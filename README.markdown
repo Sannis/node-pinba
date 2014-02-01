@@ -120,16 +120,11 @@ Allowed to be passes to flush() method:
     uint32 status
 ```
 
-TODO:
+Cannot be implemented properly:
 
 ```
     float ru_utime
     float ru_stime
-```
-
-Cannot be implemented properly:
-
-```
     uint32 memory_peak
     uint32 memory_footprint
 ```
