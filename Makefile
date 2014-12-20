@@ -19,7 +19,11 @@ clean:
 		rm -f npm-install-stamp
 
 test: npm-install
-		./node_modules/.bin/mocha --slow 333 --reporter spec test/test.js
+		./node_modules/.bin/mocha test/test.js --slow 333 -R spec
+
+test-coveralls: npm-install
+		rm -rf ./lib-cov && ./node_modules/.bin/jscoverage lib lib-cov
+		LIB_COV=1 ./node_modules/.bin/mocha tests/test.js --slow 333 -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 
 lint: npm-install
 		./node_modules/.bin/jshint . --show-non-errors
@@ -32,4 +36,4 @@ doc: ./lib/pinba.js
 		  --output ${API_DEST_DIR} \
 		  ./lib/pinba.js
 
-.PHONY: all npm-install clean test lint doc
+.PHONY: all npm-install clean test test-coveralls lint doc

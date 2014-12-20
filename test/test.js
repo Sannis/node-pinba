@@ -15,7 +15,7 @@ var _ = require('lodash');
 
 var sinon = require("sinon");
 
-var Pinba = require('../');
+var Pinba = require(process.env.LIB_COV ? '../lib-cov/pinba' : '../lib/pinba');
 
 describe('pinba', function () {
   var constants = [

@@ -1,7 +1,7 @@
 Node-pinba
 ==========
 
-[![NPM version][NPM version image]][NPM version URL] [![Build status][Build status image]][Build status URL]
+[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL] [![CS][CSI]][CSURL]
 
 -----
 
@@ -15,13 +15,17 @@ Node-pinba provides client for Pinba server that provides statistics sending fro
 
 Check out the [Github repo] for the source code.
 
+[NPMVI]: https://badge.fury.io/js/pinba.png
+[NPMVURL]: http://badge.fury.io/js/pinba
+
+[BSI]: https://secure.travis-ci.org/Sannis/node-pinba.png?branch=master
+[BSURL]: http://travis-ci.org/Sannis/node-pinba
+
+[CSI]: https://coveralls.io/repos/Sannis/node-pinba/badge.png
+[CSURL]: https://coveralls.io/r/Sannis/node-pinba
+
 [Pinba]: http://pinba.org/
 [node.js]: http://nodejs.org/
-
-[NPM version image]: https://badge.fury.io/js/pinba.png
-[NPM version URL]: http://badge.fury.io/js/pinba
-[Build status image]: https://secure.travis-ci.org/Sannis/node-pinba.png?branch=master
-[Build status URL]: http://travis-ci.org/Sannis/node-pinba
 
 [Github repo]: https://github.com/Sannis/node-pinba
 
