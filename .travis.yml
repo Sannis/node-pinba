@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - 0.8
   - 0.10
   - 0.11
 env:
@@ -8,8 +7,6 @@ env:
   - COVERALLS=1
 matrix:
   exclude:
-    - node_js: 0.8
-      env: COVERALLS=1
     - node_js: 0.10
       env: COVERALLS=1
 script:
