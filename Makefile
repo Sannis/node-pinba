@@ -23,7 +23,7 @@ test: npm-install
 
 test-coveralls: npm-install
 		rm -rf ./lib-cov && ./node_modules/.bin/jscoverage lib lib-cov
-		LIB_COV=1 ./node_modules/.bin/mocha tests/test.js --slow 333 -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+		LIB_COV=1 ./node_modules/.bin/mocha test/test.js --slow 333 -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 
 lint: npm-install
 		./node_modules/.bin/jshint . --show-non-errors
