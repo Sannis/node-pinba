@@ -597,48 +597,74 @@ describe('pinba', function () {
         });
         // End
 
-        var r = new Pinba.Request(), data;
-
-        r.setHostname('HOSTNAME');
-        r.setServerName('SERVER_NAME');
-        r.setScriptName('SCRIPT_NAME');
-        r.setSchema('SCHEMA');
+        var r = new Pinba.Request();
 
         r.flush(function () {
           assert.ok(socket_create_stub.calledOnce);
           assert.ok(socket_on_spy.calledOnce);
           assert.ok(socket_close_spy.calledOnce);
 
-          var expected_data = {
-            hostname:       'HOSTNAME',
-            server_name:    'SERVER_NAME',
-            script_name:    'SCRIPT_NAME',
-            schema:         'SCHEMA',
+          // Stubs
+          require('gpb').encoded_length.restore();
+          require('gpb').encode.restore();
 
-            request_count:    1,
+          socket_create_stub.restore();
+          // End
 
-            tag_name:         [],
-            tag_value:        [],
+          done();
+        });
+      });
 
-            timer_hit_count:  [],
-            timer_value:      [],
-            timer_tag_count:  [],
-            timer_tag_name:   [],
-            timer_tag_value:  [],
+      it('flush() should throw error if GPB.encode() failed', function (done) {
+        // Stubs
+        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
+        gpb_encoded_length_stub.returns(1);
+        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
+        gpb_encode_stub.returns(2);
 
-            dictionary:       []
-          };
+        var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
+        socket_create_stub.returns({});
+        // End
 
-          data = gpb_encoded_length_stub.firstCall.args[0];
+        var r = new Pinba.Request(), data;
 
-          delete data.request_time;
-          delete data.memory_peak;
-          delete data.document_size;
-          delete data.status;
-          delete data.ru_utime;
-          delete data.ru_stime;
+        try {
+          r.flush();
+        } catch (err) {
+          assert.ok(err);
+          assert.equal(err.toString(), "Error: Wrong encoded message size");
+        }
 
-          assert.deepEqual(data, expected_data);
+        assert.ok(!socket_create_stub.called);
+
+        // Stubs
+        require('gpb').encoded_length.restore();
+        require('gpb').encode.restore();
+
+        socket_create_stub.restore();
+        // End
+
+        done();
+      });
+
+      it('flush() should call callback if GPB.encode() failed', function (done) {
+        // Stubs
+        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
+        gpb_encoded_length_stub.returns(1);
+        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
+        gpb_encode_stub.returns(2);
+
+        var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
+        socket_create_stub.returns({});
+        // End
+
+        var r = new Pinba.Request();
+
+        r.flush(function (err) {
+          assert.ok(err);
+          assert.equal(err.toString(), "Error: Wrong encoded message size");
+
+          assert.ok(!socket_create_stub.called);
 
           // Stubs
           require('gpb').encoded_length.restore();
