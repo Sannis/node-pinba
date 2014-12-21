@@ -576,6 +576,80 @@ describe('pinba', function () {
         socket_create_stub.restore();
         // End
       });
+
+      it('flush() should call callback on success', function (done) {
+        // Stubs
+        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
+        gpb_encoded_length_stub.returns(1);
+        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
+        gpb_encode_stub.returns(1);
+
+        var socket_on_spy = sinon.spy();
+        var socket_send_spy = function (b, o, l, p, s, cb) {
+          cb(false, l);
+        };
+        var socket_close_spy = sinon.spy();
+        var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
+        socket_create_stub.returns({
+          on:    socket_on_spy,
+          send:  socket_send_spy,
+          close: socket_close_spy
+        });
+        // End
+
+        var r = new Pinba.Request(), data;
+
+        r.setHostname('HOSTNAME');
+        r.setServerName('SERVER_NAME');
+        r.setScriptName('SCRIPT_NAME');
+        r.setSchema('SCHEMA');
+
+        r.flush(function () {
+          assert.ok(socket_create_stub.calledOnce);
+          assert.ok(socket_on_spy.calledOnce);
+          assert.ok(socket_close_spy.calledOnce);
+
+          var expected_data = {
+            hostname:       'HOSTNAME',
+            server_name:    'SERVER_NAME',
+            script_name:    'SCRIPT_NAME',
+            schema:         'SCHEMA',
+
+            request_count:    1,
+
+            tag_name:         [],
+            tag_value:        [],
+
+            timer_hit_count:  [],
+            timer_value:      [],
+            timer_tag_count:  [],
+            timer_tag_name:   [],
+            timer_tag_value:  [],
+
+            dictionary:       []
+          };
+
+          data = gpb_encoded_length_stub.firstCall.args[0];
+
+          delete data.request_time;
+          delete data.memory_peak;
+          delete data.document_size;
+          delete data.status;
+          delete data.ru_utime;
+          delete data.ru_stime;
+
+          assert.deepEqual(data, expected_data);
+
+          // Stubs
+          require('gpb').encoded_length.restore();
+          require('gpb').encode.restore();
+
+          socket_create_stub.restore();
+          // End
+
+          done();
+        });
+      });
     });
   });
 });
