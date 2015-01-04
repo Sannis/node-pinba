@@ -300,13 +300,19 @@ describe('pinba', function () {
       });
 
       it('timersGet() should support ONLY_STOPPED_TIMERS flag', function () {
-        var r = new Pinba.Request();
+        var r = new Pinba.Request(), timers;
         var timer1 = r.timerStart({}, {data1: 'data1value'});
+        var timer2 = r.timerStart({}, {data2: 'data2value'});
 
         r.timerStop(timer1);
 
-        var timers = r.timersGet(Pinba.ONLY_STOPPED_TIMERS);
+        timers = r.timersGet(Pinba.ONLY_STOPPED_TIMERS);
         assert.deepEqual(timers, [timer1]);
+
+        r.timerStop(timer2);
+
+        timers = r.timersGet(Pinba.ONLY_STOPPED_TIMERS);
+        assert.deepEqual(timers, [timer1, timer2]);
       });
 
       it('cannot stop already stopped timer [timerStop]', function () {
