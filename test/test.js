@@ -135,9 +135,11 @@ describe('pinba', function () {
       it('should by properly generated [tagSet+tagGet]', function () {
         var r = new Pinba.Request();
 
+        assert.equal(r.tagGet('tag1'), null, "Right tag value before set");
+
         r.tagSet('tag1', 'value');
 
-        assert.equal(r.tagGet('tag1'), 'value', "Right tag value");
+        assert.equal(r.tagGet('tag1'), 'value', "Right tag value after set");
       });
 
       it('may be replaced [tagSet+tagSet+tagGet]', function () {
