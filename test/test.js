@@ -445,6 +445,7 @@ describe('Pinba', function () {
         r.tagSet('tag1', 'value1');
         r.tagSet('tag2', 'value2');
         r.tagSet('tag3', 'value2');
+        r.tagSet('value1', 'tag3');
 
         r.timerAdd({tag1: 'value1'}, 0.1);
         r.timerAdd({tag2: 'value1'}, 0.2);
@@ -474,8 +475,8 @@ describe('Pinba', function () {
 
           request_count:    1,
 
-          tag_name:         [0, 2, 4],
-          tag_value:        [1, 3, 3],
+          tag_name:         [0, 2, 4, 1],
+          tag_value:        [1, 3, 3, 4],
 
           timer_hit_count:  [1, 1, 2, 1],
           timer_value:      [0.1, 0.2, 0.7, 0.8],
