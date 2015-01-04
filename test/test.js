@@ -693,7 +693,7 @@ describe('pinba', function () {
 
         var r = new Pinba.Request();
 
-        assert.throws(r.flush, Error, "Pinba: Wrong encoded message size");
+        assert.throws(r.flush.bind(r), Error, "Pinba: Wrong encoded message size");
 
         assert.ok(!socket_create_stub.called);
 
