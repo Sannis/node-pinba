@@ -302,12 +302,69 @@ describe('pinba', function () {
       it('timersGet() should support ONLY_STOPPED_TIMERS flag', function () {
         var r = new Pinba.Request();
         var timer1 = r.timerStart({}, {data1: 'data1value'});
-        var timer2 = r.timerStart({}, {data2: 'data2value'});
 
         r.timerStop(timer1);
 
         var timers = r.timersGet(Pinba.ONLY_STOPPED_TIMERS);
         assert.deepEqual(timers, [timer1]);
+      });
+
+      it('cannot stop already stopped timer [timerStop]', function () {
+        var r = new Pinba.Request();
+        var timer1 = r.timerStart({}, {data1: 'data1value'});
+
+        r.timerStop(timer1);
+
+        assert.throws(r.timerStop.bind(r, timer1), Error, "Pinba: Cannot stop already stopped timer");
+      });
+
+      it('cannot stop nonexistent timer [timerStop]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerStop.bind(r, timer1), Error, "Pinba: Cannot stop nonexistent timer");
+      });
+
+      it('cannot delete nonexistent timer [timerDelete]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerDelete.bind(r, timer1), Error, "Pinba: Cannot delete nonexistent timer");
+      });
+
+      it('cannot modify nonexistent timer [timerTagsMerge]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerTagsMerge.bind(r, timer1, {}), Error, "Pinba: Cannot modify nonexistent timer");
+      });
+
+      it('cannot modify nonexistent timer [timerTagsReplace]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerTagsReplace.bind(r, timer1, {}), Error, "Pinba: Cannot modify nonexistent timer");
+      });
+
+      it('cannot modify nonexistent timer [timerDataMerge]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerDataMerge.bind(r, timer1, {}), Error, "Pinba: Cannot modify nonexistent timer");
+      });
+
+      it('cannot modify nonexistent timer [timerDataReplace]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerDataReplace.bind(r, timer1, {}), Error, "Pinba: Cannot modify nonexistent timer");
+      });
+
+      it('cannot get info for nonexistent timer [timerGetInfo]', function () {
+        var r = new Pinba.Request();
+        var timer1 = 1;
+
+        assert.throws(r.timerGetInfo.bind(r, timer1), Error, "Pinba: Cannot get info for nonexistent timer");
       });
     });
 
@@ -628,7 +685,7 @@ describe('pinba', function () {
         socket_create_stub.returns({});
         // End
 
-        var r = new Pinba.Request(), data;
+        var r = new Pinba.Request();
 
         try {
           r.flush();
