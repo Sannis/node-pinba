@@ -687,12 +687,7 @@ describe('pinba', function () {
 
         var r = new Pinba.Request();
 
-        try {
-          r.flush();
-        } catch (err) {
-          assert.ok(err);
-          assert.equal(err.toString(), "Error: Wrong encoded message size");
-        }
+        assert.throws(r.flush, Error, "Pinba: Wrong encoded message size");
 
         assert.ok(!socket_create_stub.called);
 
@@ -720,8 +715,8 @@ describe('pinba', function () {
         var r = new Pinba.Request();
 
         r.flush(function (err) {
-          assert.ok(err);
-          assert.equal(err.toString(), "Error: Wrong encoded message size");
+          assert.ok(err instanceof Error);
+          assert.equal(err.message, "Pinba: Wrong encoded message size");
 
           assert.ok(!socket_create_stub.called);
 
