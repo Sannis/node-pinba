@@ -492,16 +492,16 @@ describe('Pinba', function () {
           ]
         };
 
-        assert.deepEqual(data.tag_name, expected_data.tag_name);
-        assert.deepEqual(data.tag_value, expected_data.tag_value);
+        assert.deepEqual(expected_data.tag_name, data.tag_name);
+        assert.deepEqual(expected_data.tag_value, data.tag_value);
 
-        assert.deepEqual(data.timer_hit_count, expected_data.timer_hit_count);
-        assert.deepEqual(data.timer_value, expected_data.timer_value);
-        assert.deepEqual(data.timer_tag_count, expected_data.timer_tag_count);
-        assert.deepEqual(data.timer_tag_name, expected_data.timer_tag_name);
-        assert.deepEqual(data.timer_tag_value, expected_data.timer_tag_value);
+        assert.deepEqual(expected_data.timer_hit_count, data.timer_hit_count);
+        assert.deepEqual(expected_data.timer_value, data.timer_value);
+        assert.deepEqual(expected_data.timer_tag_count, data.timer_tag_count);
+        assert.deepEqual(expected_data.timer_tag_name, data.timer_tag_name);
+        assert.deepEqual(expected_data.timer_tag_value, data.timer_tag_value);
 
-        assert.deepEqual(data, expected_data);
+        assert.deepEqual(expected_data, data);
       });
 
       it('flush() should call gpb and dgram methods', function () {
@@ -564,7 +564,7 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(data, expected_data);
+        assert.deepEqual(expected_data, data);
 
         // Stubs
         require('gpb').encoded_length.restore();
@@ -639,7 +639,7 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(data, expected_data);
+        assert.deepEqual(expected_data, data);
 
         // Stubs
         require('gpb').encoded_length.restore();
@@ -716,7 +716,7 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(data, expected_data);
+        assert.deepEqual(expected_data, data);
 
         // Stubs
         require('gpb').encoded_length.restore();
@@ -793,7 +793,7 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(data, expected_data);
+        assert.deepEqual(expected_data, data);
 
         // Stubs
         process.hrtime.restore();
