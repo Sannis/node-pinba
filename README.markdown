@@ -1,7 +1,7 @@
 Node-pinba
 ==========
 
-[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL] [![CS][CSI]][CSURL]
+[![NPM version][NPMVI]][NPMVURL] [![DS][DSI]][DSURL] [![BS][BSI]][BSURL] [![CS][CSI]][CSURL]
 
 -----
 
@@ -15,6 +15,9 @@ Check out the [Github repo] for the source code.
 
 [NPMVI]: https://badge.fury.io/js/pinba.png
 [NPMVURL]: http://badge.fury.io/js/pinba
+
+[DSI]: https://david-dm.org/Sannis/node-pinba.png
+[DSURL]: https://david-dm.org/Sannis/node-pinba
 
 [BSI]: https://secure.travis-ci.org/Sannis/node-pinba.png?branch=master
 [BSURL]: http://travis-ci.org/Sannis/node-pinba
