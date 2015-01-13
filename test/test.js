@@ -505,12 +505,15 @@ describe('Pinba', function () {
         assert.deepEqual(expected_data, data);
       });
 
-      it('flush() should call gpb and dgram methods', function () {
+      it('flush() should call protobuf builder and dgram methods', function () {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(1);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+
+        var buffer = new Buffer("smth");
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -556,7 +559,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = gpb_encoded_length_stub.firstCall.args[0];
+        data = builder_set_stub.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -568,8 +571,9 @@ describe('Pinba', function () {
         assert.deepEqual(expected_data, data);
 
         // Stubs
-        require('gpb').encoded_length.restore();
-        require('gpb').encode.restore();
+        PinbaRequestProtoBufBuilder.prototype.set.restore();
+
+        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
         socket_create_stub.restore();
         // End
@@ -577,10 +581,13 @@ describe('Pinba', function () {
 
       it('flush() should support request data overriding', function () {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(1);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+
+        var buffer = new Buffer("smth");
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -631,7 +638,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = gpb_encoded_length_stub.firstCall.args[0];
+        data = builder_set_stub.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -643,8 +650,9 @@ describe('Pinba', function () {
         assert.deepEqual(expected_data, data);
 
         // Stubs
-        require('gpb').encoded_length.restore();
-        require('gpb').encode.restore();
+        PinbaRequestProtoBufBuilder.prototype.set.restore();
+
+        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
         socket_create_stub.restore();
         // End
@@ -652,10 +660,13 @@ describe('Pinba', function () {
 
       it('flush() should support FLUSH_ONLY_STOPPED_TIMERS flag', function () {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(1);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+
+        var buffer = new Buffer("smth");
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -708,7 +719,7 @@ describe('Pinba', function () {
           dictionary:       ['tag2', 'tag1value']
         };
 
-        data = gpb_encoded_length_stub.firstCall.args[0];
+        data = builder_set_stub.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -720,8 +731,9 @@ describe('Pinba', function () {
         assert.deepEqual(expected_data, data);
 
         // Stubs
-        require('gpb').encoded_length.restore();
-        require('gpb').encode.restore();
+        PinbaRequestProtoBufBuilder.prototype.set.restore();
+
+        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
         socket_create_stub.restore();
         // End
@@ -732,10 +744,13 @@ describe('Pinba', function () {
         var process_hrtime_stub = sinon.stub(process, "hrtime");
         process_hrtime_stub.returns(1234);
 
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(1);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+
+        var buffer = new Buffer("smth");
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -785,7 +800,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = gpb_encoded_length_stub.firstCall.args[0];
+        data = builder_set_stub.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -799,8 +814,9 @@ describe('Pinba', function () {
         // Stubs
         process.hrtime.restore();
 
-        require('gpb').encoded_length.restore();
-        require('gpb').encode.restore();
+        PinbaRequestProtoBufBuilder.prototype.set.restore();
+
+        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
         socket_create_stub.restore();
         // End
@@ -808,10 +824,11 @@ describe('Pinba', function () {
 
       it('flush() should call callback on success', function (done) {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(1);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var buffer = new Buffer("smth");
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = function (b, o, l, p, s, cb) {
@@ -836,8 +853,7 @@ describe('Pinba', function () {
           assert.ok(socket_close_spy.calledOnce);
 
           // Stubs
-          require('gpb').encoded_length.restore();
-          require('gpb').encode.restore();
+          PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
           socket_create_stub.restore();
           // End
@@ -846,12 +862,12 @@ describe('Pinba', function () {
         });
       });
 
-      it('flush() should throw error if GPB.encode() failed', function (done) {
+      it('flush() should throw error if protobuf builder throws error', function (done) {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(2);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.throws();
 
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({});
@@ -859,15 +875,14 @@ describe('Pinba', function () {
 
         var r = new Pinba.Request();
 
-        assert.throws(r.flush.bind(r), Error, "Pinba: Wrong encoded message size");
+        assert.throws(r.flush.bind(r), Error);
 
         assert.deepEqual({}, r.timers);
 
         assert.ok(!socket_create_stub.called);
 
         // Stubs
-        require('gpb').encoded_length.restore();
-        require('gpb').encode.restore();
+        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
         socket_create_stub.restore();
         // End
@@ -875,12 +890,12 @@ describe('Pinba', function () {
         done();
       });
 
-      it('flush() should call callback if GPB.encode() failed', function (done) {
+      it('flush() should call callback if protobuf builder throws error', function (done) {
         // Stubs
-        var gpb_encoded_length_stub = sinon.stub(require('gpb'), "encoded_length");
-        gpb_encoded_length_stub.returns(1);
-        var gpb_encode_stub = sinon.stub(require('gpb'), "encode");
-        gpb_encode_stub.returns(2);
+        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+
+        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
+        builder_toBuffer_stub.throws();
 
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({});
@@ -890,15 +905,13 @@ describe('Pinba', function () {
 
         r.flush(function (err) {
           assert.ok(err instanceof Error);
-          assert.equal(err.message, "Pinba: Wrong encoded message size");
 
           assert.deepEqual({}, r.timers);
 
           assert.ok(!socket_create_stub.called);
 
           // Stubs
-          require('gpb').encoded_length.restore();
-          require('gpb').encode.restore();
+          PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
 
           socket_create_stub.restore();
           // End

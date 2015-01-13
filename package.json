@@ -22,11 +22,11 @@
 , "scripts" : { "test" : "make test" }
 , "engines" : { "node" : ">= 0.8.0" }
 , "dependencies" :
-  { "lodash" : "~2.4.1"
-  , "gpb"    : "~0.8.2"
+  { "protobufjs" : "~3.8.2"
+  , "lodash"     : "~2.4.1"
   }
 , "devDependencies" :
-  { "mocha"  : "~2.0.1"
+  { "mocha"  : "~2.1.0"
   , "sinon"  : "~1.12.2"
   , "jshint" : "~2.5.11"
   , "ndoc"   : "~3.1.0"
