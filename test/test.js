@@ -383,6 +383,8 @@ describe('Pinba', function () {
         r.setScriptName('SCRIPT_NAME');
         r.setSchema('SCHEMA');
 
+        r.setRequestTime(0.5);
+
         r.tagSet('tag1', 'value1');
         r.tagSet('tag2', 'value2');
         r.tagSet('tag3', 'value2');
@@ -393,7 +395,6 @@ describe('Pinba', function () {
 
         var info = r.getInfo();
 
-        delete info.req_time;
         delete info.ru_utime;
         delete info.ru_stime;
 
@@ -405,6 +406,7 @@ describe('Pinba', function () {
             script_name:    'SCRIPT_NAME',
             schema:         'SCHEMA',
             req_count:      1,
+            req_time:       0.5,
             timers:         [
               {
                 value: 0.1,
@@ -442,6 +444,8 @@ describe('Pinba', function () {
         r.setScriptName('SCRIPT_NAME');
         r.setSchema('SCHEMA');
 
+        r.setRequestTime(0.5);
+
         r.tagSet('tag1', 'value1');
         r.tagSet('tag2', 'value2');
         r.tagSet('tag3', 'value2');
@@ -460,7 +464,6 @@ describe('Pinba', function () {
 
         var data = r.getGPBMessageData();
 
-        delete data.request_time;
         delete data.memory_peak;
         delete data.document_size;
         delete data.status;
@@ -474,6 +477,7 @@ describe('Pinba', function () {
           schema:         'SCHEMA',
 
           request_count:    1,
+          request_time:     0.5,
 
           tag_name:         [0, 2, 4, 1],
           tag_value:        [1, 3, 3, 4],
