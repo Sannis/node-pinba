@@ -80,7 +80,7 @@ describe('Pinba', function () {
           pinba_port:   'PINBA_PORT'
         });
 
-        assert.deepEqual(
+        assert.deepStrictEqual(
           [
             r.hostname,
             r.server_name,
@@ -110,7 +110,7 @@ describe('Pinba', function () {
         r.setPinbaServer('PINBA_SERVER');
         r.setPinbaPort('PINBA_PORT');
 
-        assert.deepEqual(
+        assert.deepStrictEqual(
           [
             r.hostname,
             r.server_name,
@@ -166,7 +166,7 @@ describe('Pinba', function () {
         r.tagSet('tag1', 'value1');
         r.tagSet('tag2', 'value2');
 
-        assert.deepEqual(
+        assert.deepStrictEqual(
           r.tagsGet(),
           {
             'tag1': 'value1',
@@ -206,8 +206,8 @@ describe('Pinba', function () {
 
           assert.ok(!info.started, "Stopped");
 
-          assert.ok(info.value * 1000 < 102, "Less than 102");
-          assert.ok(info.value * 1000 > 98, "Greater than 98");
+          assert.ok(info.value * 1000 < 110, "Less than 105");
+          assert.ok(info.value * 1000 > 90, "Greater than 95");
 
           done();
         }, 100);
@@ -221,10 +221,10 @@ describe('Pinba', function () {
 
         assert.ok(!info.started, "Stopped");
 
-        assert.ok(info.value * 1000 < 102, "Less than 102");
-        assert.ok(info.value * 1000 > 98, "Greater than 98");
+        assert.ok(info.value * 1000 < 110, "Less than 105");
+        assert.ok(info.value * 1000 > 90, "Greater than 95");
 
-        assert.deepEqual(info.tags, {tag: 'tagValue'}, "Correct tags");
+        assert.deepStrictEqual(info.tags, {tag: 'tagValue'}, "Correct tags");
       });
 
       it('may be deleted [timerDelete]', function () {
@@ -234,7 +234,7 @@ describe('Pinba', function () {
 
         r.timerDelete(timer1);
 
-        assert.deepEqual(_.keys(r.timers), [timer2]);
+        assert.deepStrictEqual(_.keys(r.timers), [timer2]);
       });
 
       it('should properly works with tags [timerTagsMerge+timerTagsReplace]', function () {
@@ -246,14 +246,14 @@ describe('Pinba', function () {
         r.timerTagsMerge(timer2, {tag4: 'tag4value'});
 
         var info1 = r.timerGetInfo(timer1);
-        assert.deepEqual(info1.tags, {tag1: 'tag1valueMerged', tag3:'tag3value'}, "Tags merged");
+        assert.deepStrictEqual(info1.tags, {tag1: 'tag1valueMerged', tag3:'tag3value'}, "Tags merged");
 
         var info2 = r.timerGetInfo(timer2);
-        assert.deepEqual(info2.tags, {tag2: 'tag2value', tag4: 'tag4value'}, "Tags merged");
+        assert.deepStrictEqual(info2.tags, {tag2: 'tag2value', tag4: 'tag4value'}, "Tags merged");
 
         r.timerTagsReplace(timer1, {tag3: 'tag3valueReplaced', tag4: 'tag4valueReplaced'});
         info1 = r.timerGetInfo(timer1);
-        assert.deepEqual(info1.tags, {tag3: 'tag3valueReplaced', tag4: 'tag4valueReplaced'}, "Tags replaced");
+        assert.deepStrictEqual(info1.tags, {tag3: 'tag3valueReplaced', tag4: 'tag4valueReplaced'}, "Tags replaced");
       });
 
       it('should properly works with data [timerDataMerge+timerDataReplace]', function () {
@@ -265,14 +265,14 @@ describe('Pinba', function () {
         r.timerDataMerge(timer2, {data4: 'data4value'});
 
         var info1 = r.timerGetInfo(timer1);
-        assert.deepEqual(info1.data, {data1: 'data1valueReplaced', data3: 'data3value'}, "Data merged");
+        assert.deepStrictEqual(info1.data, {data1: 'data1valueReplaced', data3: 'data3value'}, "Data merged");
 
         var info2 = r.timerGetInfo(timer2);
-        assert.deepEqual(info2.data, {data2: 'data2value', data4: 'data4value'}, "Data merged");
+        assert.deepStrictEqual(info2.data, {data2: 'data2value', data4: 'data4value'}, "Data merged");
 
         r.timerDataReplace(timer1, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'});
         info1 = r.timerGetInfo(timer1);
-        assert.deepEqual(info1.data, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'}, "Data replaced");
+        assert.deepStrictEqual(info1.data, {data3: 'data3valueReplaced', data4: 'data4valueReplaced'}, "Data replaced");
       });
 
       it('timersStop() should stop all remaining timers', function () {
@@ -296,7 +296,7 @@ describe('Pinba', function () {
         r.timerStop(timer1);
 
         var timers = r.timersGet();
-        assert.deepEqual(timers, [timer1, timer2]);
+        assert.deepStrictEqual(timers, [timer1, timer2]);
       });
 
       it('timersGet() should support GET_ONLY_STOPPED_TIMERS flag', function () {
@@ -307,12 +307,12 @@ describe('Pinba', function () {
         r.timerStop(timer1);
 
         timers = r.timersGet(Pinba.GET_ONLY_STOPPED_TIMERS);
-        assert.deepEqual(timers, [timer1]);
+        assert.deepStrictEqual(timers, [timer1]);
 
         r.timerStop(timer2);
 
         timers = r.timersGet(Pinba.GET_ONLY_STOPPED_TIMERS);
-        assert.deepEqual(timers, [timer1, timer2]);
+        assert.deepStrictEqual(timers, [timer1, timer2]);
       });
 
       it('cannot stop already stopped timer [timerStop]', function () {
@@ -398,7 +398,7 @@ describe('Pinba', function () {
         delete info.ru_utime;
         delete info.ru_stime;
 
-        assert.deepEqual(
+        assert.deepStrictEqual(
           info,
           {
             hostname:       'HOSTNAME',
@@ -497,27 +497,29 @@ describe('Pinba', function () {
           ]
         };
 
-        assert.deepEqual(expected_data.tag_name, data.tag_name);
-        assert.deepEqual(expected_data.tag_value, data.tag_value);
+        assert.deepStrictEqual(expected_data.tag_name, data.tag_name);
+        assert.deepStrictEqual(expected_data.tag_value, data.tag_value);
 
-        assert.deepEqual(expected_data.timer_hit_count, data.timer_hit_count);
-        assert.deepEqual(expected_data.timer_value, data.timer_value);
-        assert.deepEqual(expected_data.timer_tag_count, data.timer_tag_count);
-        assert.deepEqual(expected_data.timer_tag_name, data.timer_tag_name);
-        assert.deepEqual(expected_data.timer_tag_value, data.timer_tag_value);
+        assert.deepStrictEqual(expected_data.timer_hit_count, data.timer_hit_count);
+        assert.deepStrictEqual(expected_data.timer_value, data.timer_value);
+        assert.deepStrictEqual(expected_data.timer_tag_count, data.timer_tag_count);
+        assert.deepStrictEqual(expected_data.timer_tag_name, data.timer_tag_name);
+        assert.deepStrictEqual(expected_data.timer_tag_value, data.timer_tag_value);
 
-        assert.deepEqual(expected_data, data);
+        assert.deepStrictEqual(expected_data, data);
       });
 
       it('flush() should call protobuf builder and dgram methods', function () {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_spy = sinon.spy(ProtoBufPinbaRequest, "fromObject");
 
-        var buffer = new Buffer("smth");
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.returns(buffer);
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -537,11 +539,10 @@ describe('Pinba', function () {
 
         r.flush();
 
-        assert.deepEqual({}, r.timers);
+        assert.deepStrictEqual({}, r.timers);
 
-        assert.ok(socket_create_stub.calledOnce);
-        assert.ok(socket_on_spy.calledOnce);
-        assert.ok(socket_send_spy.calledOnce);
+        assert.ok(request_verify_spy.calledOnce);
+        assert.ok(request_fromObject_spy.calledOnce);
 
         var expected_data = {
           hostname:       'HOSTNAME',
@@ -563,7 +564,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = builder_set_stub.firstCall.args[0];
+        data = request_verify_spy.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -572,26 +573,30 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(expected_data, data);
+        assert.deepStrictEqual(expected_data, data);
+
+        assert.ok(socket_create_stub.calledOnce);
+        assert.ok(socket_on_spy.calledOnce);
+        assert.ok(socket_send_spy.calledOnce);
 
         // Stubs
-        PinbaRequestProtoBufBuilder.prototype.set.restore();
-
-        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+        request_verify_spy.restore();
+        request_fromObject_spy.restore();
         socket_create_stub.restore();
         // End
       });
 
       it('flush() should support request data overriding', function () {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_spy = sinon.spy(ProtoBufPinbaRequest, "fromObject");
 
-        var buffer = new Buffer("smth");
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.returns(buffer);
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -616,7 +621,7 @@ describe('Pinba', function () {
           }
         });
 
-        assert.deepEqual({}, r.timers);
+        assert.deepStrictEqual({}, r.timers);
 
         assert.ok(socket_create_stub.calledOnce);
         assert.ok(socket_on_spy.calledOnce);
@@ -642,7 +647,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = builder_set_stub.firstCall.args[0];
+        data = request_verify_spy.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -651,26 +656,26 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(expected_data, data);
+        assert.deepStrictEqual(expected_data, data);
 
         // Stubs
-        PinbaRequestProtoBufBuilder.prototype.set.restore();
-
-        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+        request_verify_spy.restore();
+        request_fromObject_spy.restore();
         socket_create_stub.restore();
         // End
       });
 
       it('flush() should support FLUSH_ONLY_STOPPED_TIMERS flag', function () {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_spy = sinon.spy(ProtoBufPinbaRequest, "fromObject");
 
-        var buffer = new Buffer("smth");
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.returns(buffer);
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -697,7 +702,7 @@ describe('Pinba', function () {
           flags: Pinba.FLUSH_ONLY_STOPPED_TIMERS
         });
 
-        assert.deepEqual({}, r.timers);
+        assert.deepStrictEqual({}, r.timers);
 
         assert.ok(socket_create_stub.calledOnce);
         assert.ok(socket_on_spy.calledOnce);
@@ -723,7 +728,7 @@ describe('Pinba', function () {
           dictionary:       ['tag2', 'tag1value']
         };
 
-        data = builder_set_stub.firstCall.args[0];
+        data = request_verify_spy.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -732,13 +737,11 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(expected_data, data);
+        assert.deepStrictEqual(expected_data, data);
 
         // Stubs
-        PinbaRequestProtoBufBuilder.prototype.set.restore();
-
-        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+        request_verify_spy.restore();
+        request_fromObject_spy.restore();
         socket_create_stub.restore();
         // End
       });
@@ -748,13 +751,15 @@ describe('Pinba', function () {
         var process_hrtime_stub = sinon.stub(process, "hrtime");
         process_hrtime_stub.returns(1234);
 
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_set_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "set");
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_spy = sinon.spy(ProtoBufPinbaRequest, "fromObject");
 
-        var buffer = new Buffer("smth");
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.returns(buffer);
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = sinon.spy();
@@ -776,7 +781,7 @@ describe('Pinba', function () {
           flags: Pinba.FLUSH_RESET_DATA
         });
 
-        assert.deepEqual({}, r.timers);
+        assert.deepStrictEqual({}, r.timers);
 
         assert.equal(1234, r.start);
 
@@ -804,7 +809,7 @@ describe('Pinba', function () {
           dictionary:       []
         };
 
-        data = builder_set_stub.firstCall.args[0];
+        data = request_verify_spy.firstCall.args[0];
 
         delete data.request_time;
         delete data.memory_peak;
@@ -813,26 +818,27 @@ describe('Pinba', function () {
         delete data.ru_utime;
         delete data.ru_stime;
 
-        assert.deepEqual(expected_data, data);
+        assert.deepStrictEqual(expected_data, data);
 
         // Stubs
         process.hrtime.restore();
-
-        PinbaRequestProtoBufBuilder.prototype.set.restore();
-
-        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+        request_verify_spy.restore();
+        request_fromObject_spy.restore();
         socket_create_stub.restore();
         // End
       });
 
       it('flush() should call callback on success', function (done) {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var buffer = new Buffer("smth");
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.returns(buffer);
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_spy = sinon.spy(ProtoBufPinbaRequest, "fromObject");
+
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_on_spy = sinon.spy();
         var socket_send_spy = function (b, o, l, p, s, cb) {
@@ -850,15 +856,15 @@ describe('Pinba', function () {
         var r = new Pinba.Request();
 
         r.flush(function () {
-          assert.deepEqual({}, r.timers);
+          assert.deepStrictEqual({}, r.timers);
 
           assert.ok(socket_create_stub.calledOnce);
           assert.ok(socket_on_spy.calledOnce);
           assert.ok(socket_close_spy.calledOnce);
 
           // Stubs
-          PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+          request_verify_spy.restore();
+          request_fromObject_spy.restore();
           socket_create_stub.restore();
           // End
 
@@ -868,10 +874,16 @@ describe('Pinba', function () {
 
       it('flush() should throw error if protobuf builder throws error', function (done) {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.throws();
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_stub = sinon.stub(ProtoBufPinbaRequest, "fromObject");
+        request_fromObject_stub.throws();
+
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({});
@@ -881,13 +893,13 @@ describe('Pinba', function () {
 
         assert.throws(r.flush.bind(r), Error);
 
-        assert.deepEqual({}, r.timers);
+        assert.deepStrictEqual({}, r.timers);
 
         assert.ok(!socket_create_stub.called);
 
         // Stubs
-        PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+        request_verify_spy.restore();
+        request_fromObject_stub.restore();
         socket_create_stub.restore();
         // End
 
@@ -896,10 +908,16 @@ describe('Pinba', function () {
 
       it('flush() should call callback if protobuf builder throws error', function (done) {
         // Stubs
-        var PinbaRequestProtoBufBuilder = Pinba.getPinbaRequestProtoBufBuilder();
+        var ProtoBufPinbaRequest = Pinba.getProtoBufPinbaRequest();
 
-        var builder_toBuffer_stub = sinon.stub(PinbaRequestProtoBufBuilder.prototype, "toBuffer");
-        builder_toBuffer_stub.throws();
+        var request_verify_spy = sinon.stub(ProtoBufPinbaRequest, "verify");
+        var request_fromObject_stub = sinon.stub(ProtoBufPinbaRequest, "fromObject");
+        request_fromObject_stub.throws();
+
+        var buffer = Buffer.from("smth");
+        // TODO: check this call
+        //var writer_finish_stub = sinon.stub(ProtoBufPinbaRequest.prototype, "finish");
+        //writer_finish_stub.returns(buffer);
 
         var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
         socket_create_stub.returns({});
@@ -910,13 +928,13 @@ describe('Pinba', function () {
         r.flush(function (err) {
           assert.ok(err instanceof Error);
 
-          assert.deepEqual({}, r.timers);
+          assert.deepStrictEqual({}, r.timers);
 
           assert.ok(!socket_create_stub.called);
 
           // Stubs
-          PinbaRequestProtoBufBuilder.prototype.toBuffer.restore();
-
+          request_verify_spy.restore();
+          request_fromObject_stub.restore();
           socket_create_stub.restore();
           // End
 

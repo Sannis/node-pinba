@@ -1,17 +1,23 @@
+root: false
+
 language: node_js
+
 node_js:
-  - 0.10
-  - 0.11
+  - node
+  - lts/*
+  - 4
+  - 6
+  - 8
+  - 10
+
 env:
   -
   - COVERALLS=1
-matrix:
-  exclude:
-    - node_js: 0.10
-      env: COVERALLS=1
+
 script:
   - make test
   - make lint
+
 after_success:
   - if [ "x$COVERALLS" = "x1" ]; then npm install jscoverage; fi
   - if [ "x$COVERALLS" = "x1" ]; then npm install mocha-lcov-reporter; fi

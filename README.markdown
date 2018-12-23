@@ -5,7 +5,7 @@ Node-pinba
 
 -----
 
-**[Pinba] module for [node.js].**
+**[Pinba] module for [Node.js].**
 
 Pinba is a MySQL storage engine that acts as a realtime monitoring/statistics server
 using MySQL as a read-only interface.
@@ -23,7 +23,7 @@ Check out the [Github repo] for the source code.
 [CSURL]: https://coveralls.io/r/Sannis/node-pinba
 
 [Pinba]: http://pinba.org/
-[node.js]: http://nodejs.org/
+[Node.js]: http://nodejs.org/
 
 [Github repo]: https://github.com/Sannis/node-pinba
 
