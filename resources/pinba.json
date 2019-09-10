@@ -1,167 +1,138 @@
 {
-    "package": "Pinba",
-    "messages": [
-        {
-            "name": "Request",
-            "fields": [
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "string",
-                    "name": "hostname",
-                    "id": 1
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "string",
-                    "name": "server_name",
-                    "id": 2
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "string",
-                    "name": "script_name",
-                    "id": 3
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "request_count",
-                    "id": 4
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "document_size",
-                    "id": 5
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "memory_peak",
-                    "id": 6
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "float",
-                    "name": "request_time",
-                    "id": 7
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "float",
-                    "name": "ru_utime",
-                    "id": 8
-                },
-                {
-                    "rule": "required",
-                    "options": {},
-                    "type": "float",
-                    "name": "ru_stime",
-                    "id": 9
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "timer_hit_count",
-                    "id": 10
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "float",
-                    "name": "timer_value",
-                    "id": 11
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "timer_tag_count",
-                    "id": 12
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "timer_tag_name",
-                    "id": 13
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "timer_tag_value",
-                    "id": 14
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "string",
-                    "name": "dictionary",
-                    "id": 15
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "status",
-                    "id": 16
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "memory_footprint",
-                    "id": 17
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "Request",
-                    "name": "requests",
-                    "id": 18
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "string",
-                    "name": "schema",
-                    "id": 19
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "tag_name",
-                    "id": 20
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "tag_value",
-                    "id": 21
-                }
-            ],
-            "enums": [],
-            "messages": [],
-            "options": {},
-            "oneofs": {}
-        }
-    ],
-    "enums": [],
-    "imports": [],
-    "options": {
+  "nested": {
+    "Pinba": {
+      "options": {
         "optimize_for": "SPEED"
-    },
-    "services": []
+      },
+      "nested": {
+        "Request": {
+          "fields": {
+            "hostname": {
+              "rule": "required",
+              "type": "string",
+              "id": 1
+            },
+            "serverName": {
+              "rule": "required",
+              "type": "string",
+              "id": 2
+            },
+            "scriptName": {
+              "rule": "required",
+              "type": "string",
+              "id": 3
+            },
+            "requestCount": {
+              "rule": "required",
+              "type": "uint32",
+              "id": 4
+            },
+            "documentSize": {
+              "rule": "required",
+              "type": "uint32",
+              "id": 5
+            },
+            "memoryPeak": {
+              "rule": "required",
+              "type": "uint32",
+              "id": 6
+            },
+            "requestTime": {
+              "rule": "required",
+              "type": "float",
+              "id": 7
+            },
+            "ruUtime": {
+              "rule": "required",
+              "type": "float",
+              "id": 8
+            },
+            "ruStime": {
+              "rule": "required",
+              "type": "float",
+              "id": 9
+            },
+            "timerHitCount": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 10,
+              "options": {
+                "packed": false
+              }
+            },
+            "timerValue": {
+              "rule": "repeated",
+              "type": "float",
+              "id": 11,
+              "options": {
+                "packed": false
+              }
+            },
+            "timerTagCount": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 12,
+              "options": {
+                "packed": false
+              }
+            },
+            "timerTagName": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 13,
+              "options": {
+                "packed": false
+              }
+            },
+            "timerTagValue": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 14,
+              "options": {
+                "packed": false
+              }
+            },
+            "dictionary": {
+              "rule": "repeated",
+              "type": "string",
+              "id": 15
+            },
+            "status": {
+              "type": "uint32",
+              "id": 16
+            },
+            "memoryFootprint": {
+              "type": "uint32",
+              "id": 17
+            },
+            "requests": {
+              "rule": "repeated",
+              "type": "Request",
+              "id": 18
+            },
+            "schema": {
+              "type": "string",
+              "id": 19
+            },
+            "tagName": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 20,
+              "options": {
+                "packed": false
+              }
+            },
+            "tagValue": {
+              "rule": "repeated",
+              "type": "uint32",
+              "id": 21,
+              "options": {
+                "packed": false
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
