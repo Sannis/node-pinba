@@ -1,7 +1,11 @@
 Node-pinba
 ==========
 
-[![NPM version][NPMVI]][NPMVURL] [![BS][BSI]][BSURL] [![CS][CSI]][CSURL]
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Downloads][npm-downloads-image]][npm-url]
+[![Node.js Version][node-image]][node-url]
+[![Linux Build][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
 -----
 
@@ -12,15 +16,6 @@ using MySQL as a read-only interface.
 Node-pinba provides client for Pinba server that provides statistics sending from your node.js application.
 
 Check out the [Github repo] for the source code.
-
-[NPMVI]: https://badge.fury.io/js/pinba.png
-[NPMVURL]: http://badge.fury.io/js/pinba
-
-[BSI]: https://secure.travis-ci.org/Sannis/node-pinba.png?branch=master
-[BSURL]: http://travis-ci.org/Sannis/node-pinba
-
-[CSI]: https://coveralls.io/repos/Sannis/node-pinba/badge.png
-[CSURL]: https://coveralls.io/r/Sannis/node-pinba
 
 [Pinba]: http://pinba.org/
 [Node.js]: http://nodejs.org/
@@ -143,3 +138,15 @@ License
 -------
 
 MIT license. See license text in file [LICENSE](https://github.com/Sannis/node-pinba/blob/master/LICENSE).
+
+
+
+[npm-url]: https://npmjs.com/package/pinba
+[npm-version-image]: https://badgen.net/npm/v/pinba
+[npm-downloads-image]: https://badgen.net/npm/dm/pinba
+[node-image]: https://badgen.net/npm/node/pinba
+[node-url]: https://nodejs.org/en/download
+[travis-image]: https://badgen.net/travis/Sannis/node-pinba/master
+[travis-url]: https://travis-ci.org/Sannis/node-pinba
+[coveralls-image]: https://badgen.net/coveralls/c/github/Sannis/node-pinba/master
+[coveralls-url]: https://coveralls.io/r/Sannis/node-pinba?branch=master
