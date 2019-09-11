@@ -941,6 +941,51 @@ describe('Pinba', function () {
           done();
         });
       });
+
+      it('flush() must verify message before sending', function () {
+        var validData = {
+          hostname: 'hostname',
+          server_name: 'server_name',
+          script_name: 'script_name',
+          schema: 'schema'
+        };
+        var socket_create_stub = sinon.stub(require('dgram'), "createSocket");
+        socket_create_stub.returns({
+          on: noop,
+          send: noop
+        });
+
+        try {
+          checkMessageVerification(validData, null);
+          checkMessageVerification(Object.assign({}, validData, {hostname: 42}), 'hostname');
+          checkMessageVerification(Object.assign({}, validData, {server_name: 42}), 'server_name');
+          checkMessageVerification(Object.assign({}, validData, {script_name: 42}), 'script_name');
+          checkMessageVerification(Object.assign({}, validData, {schema: 42}), 'schema');
+        } finally {
+          socket_create_stub.restore();
+        }
+
+        function checkMessageVerification(data, invalidFieldName) {
+          var error = null;
+
+          try {
+            (new Pinba.Request(data)).flush();
+          } catch (err) {
+            error = err;
+          } finally {
+            if (invalidFieldName) {
+              assert.ok(error instanceof Error,
+                  'Verification error is missing');
+              assert.ok(error.message.indexOf(invalidFieldName + ':') === 0,
+                  'Verification error message must refer on invalid field name');
+            } else {
+              assert.strictEqual(error, null, 'Got unexpected verification error');
+            }
+          }
+        }
+
+        function noop() {}
+      });
     });
   });
 });
