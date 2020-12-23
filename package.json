@@ -34,13 +34,13 @@
     "node": ">= 4.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
-    "protobufjs": "~6.8.8",
-    "dnscache": "~1.0.1"
+    "dnscache": "~1.0.1",
+    "lodash": "^4.17.20",
+    "protobufjs": "~6.8.8"
   },
   "devDependencies": {
     "jshint": "~2.9.7",
-    "mocha": "~5.2.0",
+    "mocha": "^8.2.1",
     "ndoc": "~5.0.1",
     "sinon": "~1.12.2"
   }
