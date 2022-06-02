@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.15",
-    "protobufjs": "~6.8.8",
+    "protobufjs": "~6.11.3",
     "dnscache": "~1.0.1"
   },
   "devDependencies": {
