@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "dnscache": "~1.0.1",
-    "lodash": "^4.17.20",
-    "protobufjs": "~6.8.8"
+    "lodash": "^4.17.21",
+    "protobufjs": "^6.11.3"
   },
   "devDependencies": {
-    "jshint": "~2.9.7",
-    "mocha": "^8.2.1",
-    "ndoc": "~5.0.1",
+    "jshint": "^2.13.5",
+    "mocha": "^9.2.2",
+    "ndoc": "^6.0.0",
     "sinon": "~1.12.2"
   }
 }
